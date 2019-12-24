@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/app/junker/cctv-watcher">
+    <file compressed="true" preprocess="xml-stripblanks">main-window.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">edit-camera-dialog.ui</file>
+  </gresource>
+</gresources>
