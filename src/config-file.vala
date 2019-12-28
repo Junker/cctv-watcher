@@ -25,48 +25,67 @@ public class ConfigFile
 					continue;
 
 				var camera_type = file.get_string(group, "type");
-				var camera_name = file.get_string(group, "name");
-
+				var camera_name = group.substring(7);
 
 				try
 				{
+					Camera? new_camera = null;
+
 					switch (camera_type)
 					{
 					case CameraType.RTSP:
 					{
-						var new_camera = new RtspCamera(camera_name);
-						new_camera.set_url(file.get_string(group, "url"));
+						new_camera = new RtspCamera(camera_name);
+						var cam = new_camera as RtspCamera;
+
+						cam.set_url(file.get_string(group, "url"));
 
 						if (file.has_key(group, "proto"))
-							new_camera.proto = RtspProto.parse(file.get_string(group, "proto"));
+							cam.proto = RtspProto.parse(file.get_string(group, "proto"));
 
-						cameras.add(new_camera);
+						if (file.has_key(group, "username"))
+						{
+							cam.username = file.get_string(group, "username");
+							cam.password = file.get_string(group, "password");
+						}
 						break;
 					}
 					case CameraType.MJPEG:
 					{
-						var new_camera = new MjpegCamera(camera_name);
-						new_camera.set_url(file.get_string(group, "url"));
+						new_camera = new MjpegCamera(camera_name);
+						var cam = new_camera as MjpegCamera;
+						cam.set_url(file.get_string(group, "url"));
 
-						cameras.add(new_camera);
+						if (file.has_key(group, "username"))
+						{
+							cam.username = file.get_string(group, "username");
+							cam.password = file.get_string(group, "password");
+						}
 						break;
 					}
 					case CameraType.ONVIF:
 					{
-						var new_camera = new OnvifCamera(camera_name);
-
-						cameras.add(new_camera);
+						new_camera = new OnvifCamera(camera_name);
 						break;
 					}
 					case CameraType.V4L:
 					{
-						var new_camera = new V4lCamera(camera_name);
-						new_camera.set_device(file.get_string(group, "device"));
-
-						cameras.add(new_camera);
+						new_camera = new V4lCamera(camera_name);
+						var cam = new_camera as V4lCamera;
+						cam.set_device(file.get_string(group, "device"));
 						break;
 					}
 					}
+
+					if (new_camera == null)
+						continue;
+
+					if (file.has_key(group, "codec"))
+					{
+						new_camera.codec = CameraCodec.parse(file.get_string(group, "codec"));
+					}
+
+					cameras.add(new_camera);
 				}
 				catch (CameraError e)
 				{
@@ -95,23 +114,28 @@ public class ConfigFile
 		try
 		{
 			var config_dir = GLib.Path.get_dirname(this.filename);
-			Posix.mkdir(config_dir, 0755);
+			DirUtils.create(config_dir, 0755);
 
 			foreach(Camera camera in cameras)
 			{
-				var group = "camera: "+camera.name;
+				var group = "camera:"+camera.name;
 
-				file.set_string(group, "name", camera.name);
 				file.set_string(group, "type", camera.get_camera_type_name());
 
 				if (camera is RtspCamera)
 				{
-					file.set_string(group, "url", (camera as RtspCamera).url);
-					file.set_string(group, "proto", (camera as RtspCamera).get_proto_name());
+					var cam = camera as RtspCamera;
+					file.set_string(group, "url", cam.url);
+					file.set_string(group, "proto", cam.get_proto_name());
+					file.set_string(group, "username", cam.username);
+					file.set_string(group, "password", cam.password);
 				}
 				if (camera is MjpegCamera)
 				{
-					file.set_string(group, "url", (camera as MjpegCamera).url);
+					var cam = camera as MjpegCamera;
+					file.set_string(group, "url", cam.url);
+					file.set_string(group, "username", cam.username);
+					file.set_string(group, "password", cam.password);
 				}
 				if (camera is OnvifCamera)
 				{

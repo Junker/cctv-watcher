@@ -3,12 +3,12 @@ using Gst;
 public class V4lRenderer : Renderer
 {
 
-	public V4lRenderer(string device)
+	public V4lRenderer(V4lCamera camera)
 	{
-		base();
+		base(camera);
 
 		var source = ElementFactory.make("v4l2src", "source");
-		source.set("device", device);
+		source.set("device", camera.device);
 //
 		pipeline.add(source);
 

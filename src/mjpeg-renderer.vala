@@ -2,13 +2,19 @@ using Gst;
 
 public class MjpegRenderer : Renderer
 {
-
-	public MjpegRenderer(string url)
+	public MjpegRenderer(MjpegCamera camera)
 	{
-		base();
+		base(camera);
 
 		var source = ElementFactory.make("souphttpsrc", "source");
-		source.set("location", url);
+
+		source.set("location", camera.url);
+
+		if (camera.username != null && camera.username.strip() != "")
+		{
+			source.set("user-id", camera.username);
+			source.set("user-pw", camera.password);
+		}
 
 		pipeline.add(source);
 

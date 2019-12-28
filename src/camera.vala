@@ -1,6 +1,30 @@
+public enum CameraCodec
+{
+	AUTO,
+	H264,
+	H265,
+	MJPEG;
+
+	public static CameraCodec parse(string codec_name)
+	{
+		switch (codec_name)
+		{
+			case "h264":
+				return CameraCodec.H264;
+			case "h265":
+				return CameraCodec.H265;
+			case "mjpeg":
+				return CameraCodec.MJPEG;
+			default:
+				return CameraCodec.AUTO;
+		}
+	}
+}
+
 public abstract class Camera : Object
 {
 	public string name;
+	public CameraCodec codec = CameraCodec.AUTO;
 
 	protected Camera(string name)
 	{
@@ -23,7 +47,6 @@ public abstract class Camera : Object
 				return null;
 		}
 	}
-
 }
 
 namespace CameraType

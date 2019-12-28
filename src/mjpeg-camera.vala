@@ -1,14 +1,16 @@
 public class MjpegCamera : Camera
 {
-	public string url {
-		get;
-	}
+	public string url {get;}
 
+	public string? username;
+	public string? password;
 	public RtspProto proto;
+
 
 	public MjpegCamera(string name)
 	{
 		base(name);
+		this.codec = CameraCodec.MJPEG;
 	}
 
 	public void set_url(string url) throws CameraError

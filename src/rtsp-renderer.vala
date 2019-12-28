@@ -4,27 +4,56 @@ public class RtspRenderer : Renderer
 {
 	public Element queue;
 	public Element source;
+	public Element depay;
 
-	public RtspRenderer(string url)
+	public RtspRenderer(RtspCamera camera)
 	{
-		base();
+		base(camera);
 
 		source = ElementFactory.make("rtspsrc", "rtsp");
-		source.set("location", url);
-		// source.set("protocols", RTSP.LowerTrans.TCP);
+		source.set("location", camera.url);
 
-		queue = ElementFactory.make("queue", "queue");
+		this.set_proto(camera.proto);
 
-		pipeline.add_many(source, queue);
+		if (camera.username != null && camera.username.strip() != "")
+		{
+			source.set("user-id", camera.username);
+			source.set("user-pw", camera.password);
+		}
 
+		pipeline.add(source);
 		source.pad_added.connect(on_rtsp_pad_added);
 
-		// if (!queue.link(decoder))
-		// {
-		// 	stderr.printf("queue<->decoder Elements could not be linked.\n");
-		// 	return;
-		// }
+		if (camera.codec != CameraCodec.AUTO)
+		{
+			string depay_name = "";
 
+			switch (camera.codec)
+			{
+				case CameraCodec.H264:
+					depay_name = "rtph264depay";
+					break;
+				case CameraCodec.H265:
+					depay_name = "rtph265depay";
+					break;
+			 	case CameraCodec.MJPEG:
+					depay_name = "rtpjpegdepay";
+					break;
+			}
+
+			depay = ElementFactory.make(depay_name, "depay");
+
+			pipeline.add(depay);
+
+			if (!depay.link(decoder))
+			{
+				stderr.printf("depay<->decoder Elements could not be linked.\n");
+				return;
+			}
+
+		}
+
+		source.pad_added.connect(on_rtsp_pad_added);
 	}
 
 	public void set_proto(RtspProto proto)
@@ -46,7 +75,9 @@ public class RtspRenderer : Renderer
 
 	public void on_rtsp_pad_added(Gst.Element src, Gst.Pad new_pad)
 	{
-		Gst.Pad sink_pad = this.decoder.get_static_pad("sink");
+		var next_element = this.camera.codec == CameraCodec.AUTO ? this.decoder : this.depay; 
+
+		Gst.Pad sink_pad = next_element.get_static_pad("sink");
 		stdout.printf("Received new pad '%s' from '%s':\n", new_pad.name, src.name);
 
 		Gst.Caps new_pad_caps = new_pad.query_caps (null);

@@ -13,6 +13,8 @@ public void show_error_dialog(string message, Gtk.Window? transient_for)
 		dialog.destroy();
 	});
 
+	stderr.puts(message);
+
 	dialog.run();
 }
 

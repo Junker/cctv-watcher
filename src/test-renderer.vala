@@ -3,9 +3,9 @@ using Gst;
 public class TestRenderer : Renderer
 {
 
-	public TestRenderer()
+	public TestRenderer(TestCamera camera)
 	{
-		base();
+		base(camera);
 
 		var source = ElementFactory.make("videotestsrc", "source");
 

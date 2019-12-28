@@ -10,7 +10,6 @@ dependencies = [
     dependency('gmodule-2.0'),
     dependency('gstreamer-1.0'),
     dependency('gstreamer-rtsp-1.0'),
-    meson.get_compiler('vala').find_library('posix'),
 ]
 
 

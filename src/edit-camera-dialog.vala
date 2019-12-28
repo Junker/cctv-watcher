@@ -6,36 +6,24 @@ public class EditCameraDialog : Dialog
 {
 	private Camera? camera;
 
-	[GtkChild]
-	public ComboBoxText type_combobox;
+	[GtkChild] public ComboBoxText type_combobox;
+	[GtkChild] public Entry name_entry;
+	[GtkChild] public Grid rtsp_grid;
+	[GtkChild] public Grid onvif_grid;
+	[GtkChild] public Grid mjpeg_grid;
+	[GtkChild] public Grid v4l_grid;
+	[GtkChild] public Entry rtsp_url_entry;
+	[GtkChild] public ComboBoxText rtsp_proto_combobox;
+	[GtkChild] public Entry mjpeg_url_entry;
+	[GtkChild] public Entry v4l_device_entry;
 
-	[GtkChild]
-	public Entry name_entry;
 
-	[GtkChild]
-	public Grid rtsp_grid;
+	public EditCameraDialog()
+	{
+		this.on_type_combobox_changed(type_combobox);
+	}
 
-	[GtkChild]
-	public Grid onvif_grid;
-
-	[GtkChild]
-	public Grid mjpeg_grid;
-
-	[GtkChild]
-	public Grid v4l_grid;
-
-	[GtkChild]
-	public Entry rtsp_url_entry;
-
-	[GtkChild]
-	public ComboBoxText rtsp_proto_combobox;
-
-	[GtkChild]
-	public Entry mjpeg_url_entry;
-
-	[GtkChild]
-	public Entry v4l_device_entry;
-
+	
 	[GtkCallback]
 	public void on_save_button_clicked(Button button)
 	{
@@ -153,12 +141,6 @@ public class EditCameraDialog : Dialog
 			}
 		}
 	}
-
-	public EditCameraDialog()
-	{
-		this.on_type_combobox_changed(type_combobox);
-	}
-
 
 	public static EditCameraDialog add_camera()
 	{

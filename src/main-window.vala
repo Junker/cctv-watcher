@@ -4,8 +4,7 @@ using Gee;
 [GtkTemplate (ui = "/app/junker/cctv-watcher/main-window.ui")]
 public class MainWindow : ApplicationWindow
 {
-	[GtkChild]
-	public Grid camera_grid;
+	[GtkChild] public Grid camera_grid;
 
 	public MainWindow (Gtk.Application application)
 	{
@@ -19,7 +18,7 @@ public class MainWindow : ApplicationWindow
 		EditCameraDialog.add_camera();
 	}
 
-		[GtkCallback]
+	[GtkCallback]
 	public void on_refresh_button_clicked(ToolButton button)
 	{
 		refresh_cameras();
@@ -32,40 +31,48 @@ public class MainWindow : ApplicationWindow
 			camera_grid.remove(widget);
 		}
 
-		var i = 0;
+		int camera_count = cameras.size;
+		int per_row;
 
+		if (camera_count == 1)
+			per_row = 1;
+		else if (camera_count >= 2 && camera_count <= 4) 
+			per_row = 2;
+		else if (camera_count > 4 && camera_count <= 9) 
+			per_row = 3;
+		else
+			per_row = 4;
+
+		int i = 0;
 		foreach (Camera camera in cameras)
 		{
-			i++;
+
+			int row = 0;
+			int col = 0;
+
+			if (i > 0)
+			{
+				row = (int) Math.floor(i / per_row);
+				col = i - (row * per_row);
+			}
+
+			Renderer renderer;
 
 			if (camera is TestCamera)
-			{
-				var renderer = new TestRenderer();
-				camera_grid.attach(renderer.getWidget(),1,i);
-				renderer.play();
-			}
-			if (camera is V4lCamera)
-			{
-				var cam = (V4lCamera) camera;
-				var renderer = new V4lRenderer(cam.device);
-				camera_grid.attach(renderer.getWidget(),1,i);
-				renderer.play();
-			}
-			if (camera is RtspCamera)
-			{
-				var cam = (RtspCamera) camera;
-				var renderer = new RtspRenderer(cam.url);
-				renderer.set_proto(cam.proto);
-				camera_grid.attach(renderer.getWidget(),2,i);
-				renderer.play();
-			}
-			if (camera is MjpegCamera)
-			{
-				var cam = (MjpegCamera) camera;
-				var renderer = new MjpegRenderer(cam.url);
-				camera_grid.attach(renderer.getWidget(),1,i);
-				renderer.play();
-			}
+				renderer = new TestRenderer(camera as TestCamera);
+			else if (camera is V4lCamera)
+				renderer = new V4lRenderer(camera as V4lCamera);
+			else if (camera is RtspCamera)
+				renderer = new RtspRenderer(camera as RtspCamera);
+			else if (camera is MjpegCamera)
+				renderer = new MjpegRenderer(camera as MjpegCamera);
+			else
+				continue;
+
+			camera_grid.attach(renderer.get_widget(), row, col);
+			renderer.play();
+
+			i++;
 		}
 
 		camera_grid.show_all();
