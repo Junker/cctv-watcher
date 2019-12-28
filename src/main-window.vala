@@ -24,8 +24,25 @@ public class MainWindow : ApplicationWindow
 		refresh_cameras();
 	}
 
+	[GtkCallback]
+	public void on_destroy()
+	{
+		foreach (Renderer renderer in renderers)
+		{
+			renderer.pipeline.set_state(Gst.State.NULL);
+		}
+		
+		Gtk.main_quit();
+	}
+
 	public void refresh_cameras()
 	{
+		foreach (Renderer renderer in renderers)
+		{
+			renderer.pipeline.set_state(Gst.State.NULL);
+		}
+		renderers = new ArrayList<Renderer>();
+
 		foreach(Widget widget in camera_grid.get_children())
 		{
 			camera_grid.remove(widget);
@@ -71,6 +88,8 @@ public class MainWindow : ApplicationWindow
 
 			camera_grid.attach(renderer.get_widget(), row, col);
 			renderer.play();
+
+			renderers.add(renderer);
 
 			i++;
 		}

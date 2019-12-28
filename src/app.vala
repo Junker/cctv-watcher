@@ -5,6 +5,7 @@ using Gee;
 
 static ConfigFile config;
 static ArrayList<Camera> cameras;
+static ArrayList<Renderer> renderers;
 static App app;
 static MainWindow main_window;
 
@@ -17,7 +18,8 @@ class App : Gtk.Application
 	{
 		config = new ConfigFile();
 
-		cameras = new ArrayList<Camera>();
+		cameras   = new ArrayList<Camera>();
+		renderers = new ArrayList<Renderer>();
 
 		main_window = new MainWindow(this);
 		main_window.show();
