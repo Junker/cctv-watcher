@@ -28,10 +28,16 @@ public class RendererWidget : Frame
 		{
 			Gtk.Menu menu = new Gtk.Menu();
 			menu.attach_to_widget(this, null);
+
 			Gtk.MenuItem restart_menu_item = new Gtk.MenuItem.with_label("Restart");
 			menu.add(restart_menu_item);
+
 			Gtk.MenuItem edit_menu_item = new Gtk.MenuItem.with_label("Edit");
 			menu.add(edit_menu_item);
+
+			Gtk.MenuItem delete_menu_item = new Gtk.MenuItem.with_label("Delete");
+			menu.add(delete_menu_item);
+
 			menu.show_all();
 			menu.popup_at_pointer(event);
 
@@ -43,6 +49,12 @@ public class RendererWidget : Frame
 			edit_menu_item.activate.connect(() =>
 			{
 				EditCameraDialog.edit_camera(renderer.camera);
+			});
+
+			delete_menu_item.activate.connect(() =>
+			{
+				cameras.remove(renderer.camera);
+				main_window.refresh_cameras();
 			});
 
 			return true;
