@@ -27,8 +27,9 @@ public class RtspCamera : Camera
 	public string url {get;}
 	private const string[] schemas = {"rtsp", "rtspu", "rtspt", "rtsph", "rtsp-sdp", "rtsps", "rtspsu", "rtspst", "rtspsh"};
 	public RtspProto proto = RtspProto.AUTO;
-	public string? username;
-	public string? password;
+	public bool auth = false;
+	public string username = "";
+	public string password = "";
 
 	public RtspCamera(string name)
 	{
@@ -42,7 +43,7 @@ public class RtspCamera : Camera
 		var surl = url.strip();
 
 		var scheme = Uri.parse_scheme(surl);
-		
+
 		if (array_search(scheme, schemas) == -1)
 			throw new CameraError.WRONG_PARAM("URL should be RTSP url, e.g., rtsp://192.168.1.21:554/");
 

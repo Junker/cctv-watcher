@@ -31,7 +31,7 @@ public class MainWindow : ApplicationWindow
 		{
 			renderer.pipeline.set_state(Gst.State.NULL);
 		}
-		
+
 		Gtk.main_quit();
 	}
 

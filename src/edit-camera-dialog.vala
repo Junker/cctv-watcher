@@ -4,7 +4,7 @@ using Gee;
 [GtkTemplate (ui = "/app/junker/cctv-watcher/edit-camera-dialog.ui")]
 public class EditCameraDialog : Dialog 
 {
-	private Camera? camera;
+	private Camera? camera = null;
 
 	[GtkChild] public ComboBoxText type_combobox;
 	[GtkChild] public Entry name_entry;
@@ -13,8 +13,14 @@ public class EditCameraDialog : Dialog
 	[GtkChild] public Grid mjpeg_grid;
 	[GtkChild] public Grid v4l_grid;
 	[GtkChild] public Entry rtsp_url_entry;
+	[GtkChild] public CheckButton rtsp_auth_checkbutton;
+	[GtkChild] public Entry rtsp_username_entry;
+	[GtkChild] public Entry rtsp_password_entry;
 	[GtkChild] public ComboBoxText rtsp_proto_combobox;
 	[GtkChild] public Entry mjpeg_url_entry;
+	[GtkChild] public CheckButton mjpeg_auth_checkbutton;
+	[GtkChild] public Entry mjpeg_username_entry;
+	[GtkChild] public Entry mjpeg_password_entry;
 	[GtkChild] public Entry v4l_device_entry;
 
 
@@ -23,7 +29,21 @@ public class EditCameraDialog : Dialog
 		this.on_type_combobox_changed(type_combobox);
 	}
 
-	
+	[GtkCallback]
+	public void on_rtsp_auth_checkbutton_toggled(ToggleButton button)
+	{
+		rtsp_username_entry.sensitive = rtsp_auth_checkbutton.active;
+		rtsp_password_entry.sensitive = rtsp_auth_checkbutton.active;
+	}
+
+	[GtkCallback]
+	public void on_mjpeg_auth_checkbutton_toggled(ToggleButton button)
+	{
+		mjpeg_username_entry.sensitive = mjpeg_auth_checkbutton.active;
+		mjpeg_password_entry.sensitive = mjpeg_auth_checkbutton.active;
+	}
+
+
 	[GtkCallback]
 	public void on_save_button_clicked(Button button)
 	{
@@ -38,7 +58,7 @@ public class EditCameraDialog : Dialog
 
 		foreach (Camera camera in cameras)
 		{
-			if (camera_name == camera.name)
+			if (this.camera == null && camera_name == camera.name)
 			{
 				show_error_dialog("This name already used ", this);
 				return;
@@ -48,41 +68,59 @@ public class EditCameraDialog : Dialog
 
 		try
 		{
+			Camera new_camera = null;
+
 			switch (camera_type)
 			{
 				case CameraType.RTSP:
 				{
-					var new_camera = new RtspCamera(camera_name);
-					new_camera.set_url(rtsp_url_entry.text);
-					new_camera.proto = RtspProto.parse(rtsp_proto_combobox.active_id);
+					new_camera = new RtspCamera(camera_name);
+					var cam = new_camera as RtspCamera;
 
-					cameras.add(new_camera);
+					cam.set_url(rtsp_url_entry.text);
+					cam.proto = RtspProto.parse(rtsp_proto_combobox.active_id);
+
+					cam.auth = rtsp_auth_checkbutton.active;
+					cam.username = rtsp_username_entry.text.strip();
+					cam.password = rtsp_password_entry.text.strip();
+
 					break;
 				}
 				case CameraType.MJPEG:
 				{
-					var new_camera = new MjpegCamera(camera_name);
-					new_camera.set_url(mjpeg_url_entry.text);
+					new_camera = new MjpegCamera(camera_name);
+					var cam = new_camera as MjpegCamera;
 
-					cameras.add(new_camera);
+					cam.set_url(mjpeg_url_entry.text);
+
+					cam.auth = rtsp_auth_checkbutton.active;
+					cam.username = rtsp_username_entry.text.strip();
+					cam.password = rtsp_password_entry.text.strip();
+
 					break;
 				}
 				case CameraType.ONVIF:
 				{
-					var new_camera = new OnvifCamera(camera_name);
+					new_camera = new OnvifCamera(camera_name);
+					var cam = new_camera as OnvifCamera;
 
-					cameras.add(new_camera);
 					break;
 				}
 				case CameraType.V4L:
 				{
-					var new_camera = new V4lCamera(camera_name);
-					new_camera.set_device(v4l_device_entry.text);
+					new_camera = new V4lCamera(camera_name);
+					var cam = new_camera as V4lCamera;
 
-					cameras.add(new_camera);
+					cam.set_device(v4l_device_entry.text);
+
 					break;
 				}
 			}
+
+			if (new_camera == null)
+				return;
+
+			cameras.add(new_camera);
 		}
 		catch (CameraError e)
 		{
@@ -156,12 +194,34 @@ public class EditCameraDialog : Dialog
 		var dialog = new EditCameraDialog();
 
 		dialog.camera = camera;
-
+		
 		dialog.name_entry.text = camera.name;
 
 		if (camera is RtspCamera)
 		{
-			dialog.rtsp_url_entry.text = (camera as RtspCamera).url;
+			dialog.type_combobox.set_active_id(CameraType.RTSP);
+
+			var cam = camera as RtspCamera;
+			dialog.rtsp_url_entry.text = cam.url;
+			dialog.rtsp_auth_checkbutton.active = cam.auth;
+			dialog.rtsp_username_entry.text = cam.username;
+			dialog.rtsp_password_entry.text = cam.password;
+			dialog.rtsp_proto_combobox.set_active_id(cam.get_proto_name());
+		}
+		else if (camera is MjpegCamera)
+		{
+			dialog.type_combobox.set_active_id(CameraType.MJPEG);
+
+			var cam = camera as MjpegCamera;
+			dialog.mjpeg_url_entry.text = cam.url;
+			dialog.mjpeg_auth_checkbutton.active = cam.auth;
+			dialog.mjpeg_username_entry.text = cam.username;
+			dialog.mjpeg_password_entry.text = cam.password;
+		}
+		else if (camera is V4lCamera)
+		{
+			var cam = camera as V4lCamera;
+			dialog.v4l_device_entry.text = cam.device;
 		}
 
 		dialog.show();

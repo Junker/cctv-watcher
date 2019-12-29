@@ -15,7 +15,7 @@ public class RtspRenderer : Renderer
 
 		this.set_proto(camera.proto);
 
-		if (camera.username != null && camera.username.strip() != "")
+		if (camera.auth)
 		{
 			source.set("user-id", camera.username);
 			source.set("user-pw", camera.password);

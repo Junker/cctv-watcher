@@ -3,6 +3,7 @@
 <interface>
   <requires lib="gtk+" version="3.20"/>
   <template class="EditCameraDialog" parent="GtkDialog">
+    <property name="width_request">400</property>
     <property name="can_focus">False</property>
     <property name="modal">True</property>
     <property name="type_hint">dialog</property>
@@ -126,6 +127,8 @@
                   <object class="GtkEntry" id="name_entry">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
+                    <property name="hexpand">True</property>
+                    <property name="input_purpose">name</property>
                   </object>
                   <packing>
                     <property name="left_attach">1</property>
@@ -161,6 +164,7 @@
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="row_spacing">10</property>
+                            <property name="row_homogeneous">True</property>
                             <child>
                               <object class="GtkLabel">
                                 <property name="visible">True</property>
@@ -192,6 +196,7 @@
                                 <property name="can_focus">True</property>
                                 <property name="tooltip_text" translatable="yes">The URL your camera serves the live stream on, e.g., rtsp://192.168.1.21:554/</property>
                                 <property name="hexpand">True</property>
+                                <property name="input_purpose">url</property>
                               </object>
                               <packing>
                                 <property name="left_attach">1</property>
@@ -218,12 +223,80 @@
                               <object class="GtkLabel">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
+                                <property name="tooltip_text" translatable="yes">(Optional) The password for accessing your camera.</property>
+                                <property name="label" translatable="yes">Password:</property>
+                                <property name="xalign">0</property>
+                              </object>
+                              <packing>
+                                <property name="left_attach">0</property>
+                                <property name="top_attach">4</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkEntry" id="rtsp_password_entry">
+                                <property name="visible">True</property>
+                                <property name="sensitive">False</property>
+                                <property name="can_focus">True</property>
+                                <property name="tooltip_text" translatable="yes">(Optional) The password for accessing your camera.</property>
+                                <property name="hexpand">True</property>
+                              </object>
+                              <packing>
+                                <property name="left_attach">1</property>
+                                <property name="top_attach">4</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkEntry" id="rtsp_username_entry">
+                                <property name="visible">True</property>
+                                <property name="sensitive">False</property>
+                                <property name="can_focus">True</property>
+                                <property name="tooltip_text" translatable="yes">(Optional) The username for accessing your camera.</property>
+                                <property name="hexpand">True</property>
+                              </object>
+                              <packing>
+                                <property name="left_attach">1</property>
+                                <property name="top_attach">3</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkLabel">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
                                 <property name="tooltip_text" translatable="yes">(Optional) The username for accessing your camera.</property>
                                 <property name="label" translatable="yes">Username: </property>
                                 <property name="xalign">0</property>
                               </object>
                               <packing>
                                 <property name="left_attach">0</property>
+                                <property name="top_attach">3</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkLabel">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="tooltip_text" translatable="yes">(Optional) The username for accessing your camera.</property>
+                                <property name="label" translatable="yes">Auth: </property>
+                                <property name="xalign">0</property>
+                              </object>
+                              <packing>
+                                <property name="left_attach">0</property>
+                                <property name="top_attach">2</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkCheckButton" id="rtsp_auth_checkbutton">
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">False</property>
+                                <property name="draw_indicator">True</property>
+                                <signal name="toggled" handler="on_rtsp_auth_checkbutton_toggled" swapped="no"/>
+                                <child>
+                                  <placeholder/>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="left_attach">1</property>
                                 <property name="top_attach">2</property>
                               </packing>
                             </child>
@@ -232,36 +305,29 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="tooltip_text" translatable="yes">(Optional) The password for accessing your camera.</property>
-                                <property name="label" translatable="yes">Password:</property>
+                                <property name="label" translatable="yes">Codec:</property>
                                 <property name="xalign">0</property>
                               </object>
                               <packing>
                                 <property name="left_attach">0</property>
-                                <property name="top_attach">3</property>
+                                <property name="top_attach">5</property>
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkEntry" id="rtsp_username_entry">
+                              <object class="GtkComboBoxText" id="rtsp_proto_combobox1">
                                 <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="tooltip_text" translatable="yes">(Optional) The username for accessing your camera.</property>
-                                <property name="hexpand">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="active">0</property>
+                                <items>
+                                  <item id="auto" translatable="yes">Auto</item>
+                                  <item id="h264" translatable="yes">H264</item>
+                                  <item id="h265" translatable="yes">H265</item>
+                                  <item id="mjpeg" translatable="yes">MJpeg</item>
+                                </items>
                               </object>
                               <packing>
                                 <property name="left_attach">1</property>
-                                <property name="top_attach">2</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkEntry" id="rtsp_password_entry">
-                                <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="tooltip_text" translatable="yes">(Optional) The password for accessing your camera.</property>
-                                <property name="hexpand">True</property>
-                              </object>
-                              <packing>
-                                <property name="left_attach">1</property>
-                                <property name="top_attach">3</property>
+                                <property name="top_attach">5</property>
                               </packing>
                             </child>
                           </object>
@@ -276,6 +342,7 @@
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="row_spacing">10</property>
+                            <property name="row_homogeneous">True</property>
                             <child>
                               <object class="GtkLabel">
                                 <property name="visible">True</property>
@@ -290,24 +357,12 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkLabel">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="tooltip_text" translatable="yes">(Optional) The username for accessing your camera.</property>
-                                <property name="label" translatable="yes">Username: </property>
-                                <property name="xalign">0</property>
-                              </object>
-                              <packing>
-                                <property name="left_attach">0</property>
-                                <property name="top_attach">1</property>
-                              </packing>
-                            </child>
-                            <child>
                               <object class="GtkEntry" id="mjpeg_url_entry">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="tooltip_text" translatable="yes">The URL your camera serves the video on, e.g., http://192.168.1.21:2112/</property>
                                 <property name="hexpand">True</property>
+                                <property name="input_purpose">url</property>
                               </object>
                               <packing>
                                 <property name="left_attach">1</property>
@@ -324,31 +379,75 @@
                               </object>
                               <packing>
                                 <property name="left_attach">0</property>
-                                <property name="top_attach">2</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkEntry" id="mjpeg_username_entry">
-                                <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="tooltip_text" translatable="yes">(Optional) The username for accessing your camera.</property>
-                                <property name="hexpand">True</property>
-                              </object>
-                              <packing>
-                                <property name="left_attach">1</property>
-                                <property name="top_attach">1</property>
+                                <property name="top_attach">3</property>
                               </packing>
                             </child>
                             <child>
                               <object class="GtkEntry" id="mjpeg_password_entry">
                                 <property name="visible">True</property>
+                                <property name="sensitive">False</property>
                                 <property name="can_focus">True</property>
                                 <property name="tooltip_text" translatable="yes">(Optional) The password for accessing your camera.</property>
                                 <property name="hexpand">True</property>
                               </object>
                               <packing>
                                 <property name="left_attach">1</property>
+                                <property name="top_attach">3</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkLabel">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="tooltip_text" translatable="yes">(Optional) The username for accessing your camera.</property>
+                                <property name="label" translatable="yes">Username: </property>
+                                <property name="xalign">0</property>
+                              </object>
+                              <packing>
+                                <property name="left_attach">0</property>
                                 <property name="top_attach">2</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkEntry" id="mjpeg_username_entry">
+                                <property name="visible">True</property>
+                                <property name="sensitive">False</property>
+                                <property name="can_focus">True</property>
+                                <property name="tooltip_text" translatable="yes">(Optional) The username for accessing your camera.</property>
+                                <property name="hexpand">True</property>
+                              </object>
+                              <packing>
+                                <property name="left_attach">1</property>
+                                <property name="top_attach">2</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkLabel">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="tooltip_text" translatable="yes">(Optional) The username for accessing your camera.</property>
+                                <property name="label" translatable="yes">Auth: </property>
+                                <property name="xalign">0</property>
+                              </object>
+                              <packing>
+                                <property name="left_attach">0</property>
+                                <property name="top_attach">1</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkCheckButton" id="mjpeg_auth_checkbutton">
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">False</property>
+                                <property name="draw_indicator">True</property>
+                                <signal name="toggled" handler="on_mjpeg_auth_checkbutton_toggled" swapped="no"/>
+                                <child>
+                                  <placeholder/>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="left_attach">1</property>
+                                <property name="top_attach">1</property>
                               </packing>
                             </child>
                           </object>
@@ -363,12 +462,13 @@
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="row_spacing">10</property>
+                            <property name="row_homogeneous">True</property>
                             <child>
                               <object class="GtkLabel">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="tooltip_text" translatable="yes">The IP address or hostname of the camera.</property>
-                                <property name="label" translatable="yes">Host:</property>
+                                <property name="label" translatable="yes">Host: </property>
                                 <property name="xalign">0</property>
                               </object>
                               <packing>
@@ -400,12 +500,13 @@
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="row_spacing">10</property>
+                            <property name="row_homogeneous">True</property>
                             <child>
                               <object class="GtkLabel">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="tooltip_text" translatable="yes">local device, e.g., /dev/video0</property>
-                                <property name="label" translatable="yes">Device:</property>
+                                <property name="label" translatable="yes">Device: </property>
                                 <property name="xalign">0</property>
                               </object>
                               <packing>

@@ -10,7 +10,7 @@ public class MjpegRenderer : Renderer
 
 		source.set("location", camera.url);
 
-		if (camera.username != null && camera.username.strip() != "")
+		if (camera.auth)
 		{
 			source.set("user-id", camera.username);
 			source.set("user-pw", camera.password);

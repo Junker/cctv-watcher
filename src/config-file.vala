@@ -31,6 +31,7 @@ public class ConfigFile
 				{
 					Camera? new_camera = null;
 
+
 					switch (camera_type)
 					{
 					case CameraType.RTSP:
@@ -42,6 +43,9 @@ public class ConfigFile
 
 						if (file.has_key(group, "proto"))
 							cam.proto = RtspProto.parse(file.get_string(group, "proto"));
+
+						if (file.has_key(group, "auth"))
+							cam.auth = file.get_boolean(group, "auth");
 
 						if (file.has_key(group, "username"))
 						{
@@ -55,6 +59,9 @@ public class ConfigFile
 						new_camera = new MjpegCamera(camera_name);
 						var cam = new_camera as MjpegCamera;
 						cam.set_url(file.get_string(group, "url"));
+
+						if (file.has_key(group, "auth"))
+							cam.auth = file.get_boolean(group, "auth");
 
 						if (file.has_key(group, "username"))
 						{
@@ -127,15 +134,25 @@ public class ConfigFile
 					var cam = camera as RtspCamera;
 					file.set_string(group, "url", cam.url);
 					file.set_string(group, "proto", cam.get_proto_name());
-					file.set_string(group, "username", cam.username);
-					file.set_string(group, "password", cam.password);
+					file.set_boolean(group, "auth", cam.auth);
+
+					if (cam.auth)
+					{
+						file.set_string(group, "username", cam.username);
+						file.set_string(group, "password", cam.password);
+					}
 				}
 				if (camera is MjpegCamera)
 				{
 					var cam = camera as MjpegCamera;
 					file.set_string(group, "url", cam.url);
-					file.set_string(group, "username", cam.username);
-					file.set_string(group, "password", cam.password);
+					file.set_boolean(group, "auth", cam.auth);
+
+					if (cam.auth)
+					{
+						file.set_string(group, "username", cam.username);
+						file.set_string(group, "password", cam.password);
+					}
 				}
 				if (camera is OnvifCamera)
 				{

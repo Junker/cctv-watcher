@@ -2,8 +2,9 @@ public class MjpegCamera : Camera
 {
 	public string url {get;}
 
-	public string? username;
-	public string? password;
+	public bool auth = false;
+	public string username = "";
+	public string password = "";
 	public RtspProto proto;
 
 

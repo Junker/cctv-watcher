@@ -31,3 +31,8 @@ int array_search(string needle, string[] haystack)
 
     return result;
 }
+
+bool string_empty(string? str)
+{
+	return (str == null || str._strip() == "");
+}
