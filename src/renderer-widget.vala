@@ -53,7 +53,9 @@ public class RendererWidget : Frame
 
 			delete_menu_item.activate.connect(() =>
 			{
+				renderer.stop();
 				cameras.remove(renderer.camera);
+				config.save();
 				main_window.refresh_cameras();
 			});
 

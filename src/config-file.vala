@@ -52,6 +52,10 @@ public class ConfigFile
 							cam.username = file.get_string(group, "username");
 							cam.password = file.get_string(group, "password");
 						}
+
+						if (file.has_key(group, "codec"))
+							cam.codec = CameraCodec.parse(file.get_string(group, "codec"));
+
 						break;
 					}
 					case CameraType.MJPEG:
@@ -118,6 +122,13 @@ public class ConfigFile
 
 	public bool save()
 	{
+		//delete all cameras
+		foreach (string group in file.get_groups())
+		{
+			if (group.has_prefix("camera:"))
+				file.remove_group(group);
+		}
+
 		try
 		{
 			var config_dir = GLib.Path.get_dirname(this.filename);
@@ -141,6 +152,9 @@ public class ConfigFile
 						file.set_string(group, "username", cam.username);
 						file.set_string(group, "password", cam.password);
 					}
+
+					if (cam.codec != CameraCodec.AUTO)
+						file.set_string(group, "codec", cam.get_codec_name());
 				}
 				if (camera is MjpegCamera)
 				{

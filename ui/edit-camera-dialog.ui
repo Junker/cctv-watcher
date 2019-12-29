@@ -314,7 +314,7 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkComboBoxText" id="rtsp_proto_combobox1">
+                              <object class="GtkComboBoxText" id="rtsp_codec_combobox">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="active">0</property>

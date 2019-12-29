@@ -47,6 +47,22 @@ public abstract class Camera : Object
 				return null;
 		}
 	}
+
+	public string? get_codec_name()
+	{
+		switch(this.codec)
+		{
+			case CameraCodec.H264:
+				return "h264";
+			case CameraCodec.H265:
+				return "h265";
+			case CameraCodec.MJPEG:
+				return "mjpeg";
+			default:
+				return null;
+		}
+	}
+
 }
 
 namespace CameraType

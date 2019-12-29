@@ -17,6 +17,7 @@ public class EditCameraDialog : Dialog
 	[GtkChild] public Entry rtsp_username_entry;
 	[GtkChild] public Entry rtsp_password_entry;
 	[GtkChild] public ComboBoxText rtsp_proto_combobox;
+	[GtkChild] public ComboBoxText rtsp_codec_combobox;
 	[GtkChild] public Entry mjpeg_url_entry;
 	[GtkChild] public CheckButton mjpeg_auth_checkbutton;
 	[GtkChild] public Entry mjpeg_username_entry;
@@ -83,6 +84,8 @@ public class EditCameraDialog : Dialog
 					cam.auth = rtsp_auth_checkbutton.active;
 					cam.username = rtsp_username_entry.text.strip();
 					cam.password = rtsp_password_entry.text.strip();
+
+					cam.codec = CameraCodec.parse(rtsp_codec_combobox.active_id);
 
 					break;
 				}
@@ -207,6 +210,8 @@ public class EditCameraDialog : Dialog
 			dialog.rtsp_username_entry.text = cam.username;
 			dialog.rtsp_password_entry.text = cam.password;
 			dialog.rtsp_proto_combobox.set_active_id(cam.get_proto_name());
+			dialog.rtsp_codec_combobox.set_active_id(cam.get_codec_name());
+
 		}
 		else if (camera is MjpegCamera)
 		{
