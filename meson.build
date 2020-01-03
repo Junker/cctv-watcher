@@ -23,6 +23,8 @@ sources = [
 	'src/config-file.vala',
 	'src/camera.vala',
 	'src/utils.vala',
+	'src/systray.vala',
+	'src/settings-dialog.vala',
 	'src/renderer-widget.vala',
 	'src/rtsp-camera.vala',
 	'src/mjpeg-camera.vala',

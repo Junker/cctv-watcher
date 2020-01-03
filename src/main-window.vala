@@ -11,9 +11,27 @@ public class MainWindow : ApplicationWindow
 		GLib.Object (application: application);
 	}
 
+	[GtkCallback]
+	public bool on_delete_event(Gdk.Event event)
+	{
+		if (config.systray)
+		{
+			this.hide();
+
+			foreach (Renderer renderer in renderers)
+			{
+				renderer.stop();
+			}
+		}
+		else
+			this.destroy();
+
+		return true;
+	}
 
 	[GtkCallback]
 	public void on_add_button_clicked(ToolButton button)
+
 	{
 		EditCameraDialog.add_camera();
 	}
@@ -25,14 +43,28 @@ public class MainWindow : ApplicationWindow
 	}
 
 	[GtkCallback]
-	public void on_destroy()
+	public void on_settings_button_clicked(ToolButton button)
 	{
-		foreach (Renderer renderer in renderers)
+		var dialog = new SettingsDialog();
+		dialog.run();
+	}
+
+	[GtkCallback]
+	public bool on_window_state_event(Gdk.EventWindowState event)
+	{
+		if (config.systray && (event.new_window_state & Gdk.WindowState.ICONIFIED) != 0)
 		{
-			renderer.pipeline.set_state(Gst.State.NULL);
+//			this.hide();
 		}
 
-		Gtk.main_quit();
+		return true;
+	}
+
+
+	[GtkCallback]
+	public void on_destroy()
+	{
+		app.destroy();
 	}
 
 	public void refresh_cameras()

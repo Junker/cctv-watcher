@@ -8,6 +8,8 @@ static ArrayList<Camera> cameras;
 static ArrayList<Renderer> renderers;
 static App app;
 static MainWindow main_window;
+static SysTray systray;
+
 
 extern const string GETTEXT_PACKAGE;
 
@@ -29,7 +31,20 @@ class App : Gtk.Application
 			main_window.refresh_cameras();
 		}
 
+		systray = new SysTray();
+
 		Gtk.main();
+	}
+
+	public void destroy()
+	{
+		foreach (Renderer renderer in renderers)
+		{
+			renderer.stop();
+		}
+
+		this.quit();
+		Gtk.main_quit();
 	}
 
 	public App()

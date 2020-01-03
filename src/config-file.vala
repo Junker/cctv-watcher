@@ -2,6 +2,8 @@ public class ConfigFile
 {
 	public KeyFile file;
 	public string filename;
+	public bool startup = false;
+	public bool systray = false;
 
 	public ConfigFile()
 	{
@@ -14,8 +16,12 @@ public class ConfigFile
 	{
 		try
 		{
-
 			this.file.load_from_file(this.filename, KeyFileFlags.NONE);
+
+			if (file.has_key("settings", "systray"))
+				this.systray = file.get_boolean("settings", "systray");
+			if (file.has_key("settings", "startup"))
+				this.startup = file.get_boolean("settings", "startup");
 
 			string[] groups = file.get_groups();
 
@@ -122,6 +128,9 @@ public class ConfigFile
 
 	public bool save()
 	{
+		file.set_boolean("settings", "startup", config.startup);
+		file.set_boolean("settings", "systray", config.systray);
+
 		//delete all cameras
 		foreach (string group in file.get_groups())
 		{
