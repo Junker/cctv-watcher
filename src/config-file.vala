@@ -4,6 +4,7 @@ public class ConfigFile
 	public string filename;
 	public bool startup = false;
 	public bool systray = false;
+	public bool minimize_pause = true;
 
 	public ConfigFile()
 	{
@@ -22,6 +23,8 @@ public class ConfigFile
 				this.systray = file.get_boolean("settings", "systray");
 			if (file.has_key("settings", "startup"))
 				this.startup = file.get_boolean("settings", "startup");
+			if (file.has_key("settings", "minimize_pause"))
+				this.minimize_pause = file.get_boolean("settings", "minimize_pause");
 
 			string[] groups = file.get_groups();
 
@@ -130,6 +133,7 @@ public class ConfigFile
 	{
 		file.set_boolean("settings", "startup", config.startup);
 		file.set_boolean("settings", "systray", config.systray);
+		file.set_boolean("settings", "minimize_pause", config.minimize_pause);
 
 		//delete all cameras
 		foreach (string group in file.get_groups())

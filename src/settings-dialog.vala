@@ -5,11 +5,14 @@ public class SettingsDialog : Dialog
 {
 	[GtkChild] public CheckButton startup_checkbutton;
 	[GtkChild] public CheckButton systray_checkbutton;
+	[GtkChild] public CheckButton minimize_pause_checkbutton;
+
 
 	public SettingsDialog()
 	{
 		startup_checkbutton.set_active(config.startup);
 		systray_checkbutton.set_active(config.systray);
+		minimize_pause_checkbutton.set_active(config.minimize_pause);
 	}
 
 	[GtkCallback]
@@ -17,6 +20,7 @@ public class SettingsDialog : Dialog
 	{
 		config.startup = startup_checkbutton.get_active();
 		config.systray = systray_checkbutton.get_active();
+		config.minimize_pause = minimize_pause_checkbutton.get_active();
 
 		config.save();
 

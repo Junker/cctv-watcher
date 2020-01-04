@@ -22,9 +22,10 @@ public class MainWindow : ApplicationWindow
 		{
 			this.hide();
 
-			foreach (Renderer renderer in renderers)
+			if (config.minimize_pause)
 			{
-				renderer.stop();
+				foreach (Renderer renderer in renderers)
+					renderer.stop();
 			}
 		}
 		else
@@ -69,10 +70,23 @@ public class MainWindow : ApplicationWindow
 	[GtkCallback]
 	public bool on_window_state_event(Gdk.EventWindowState event)
 	{
-		if (config.systray && (event.new_window_state & Gdk.WindowState.ICONIFIED) != 0)
+		if (config.minimize_pause && (event.changed_mask & Gdk.WindowState.ICONIFIED) != 0)
 		{
-//			this.hide();
+			if ((event.new_window_state & Gdk.WindowState.ICONIFIED) != 0)
+			{
+				// this.hide();
+
+				foreach (Renderer renderer in renderers)
+					renderer.stop();
+			}
+			else
+			{
+				foreach (Renderer renderer in renderers)
+					renderer.play();
+			}
 		}
+
+
 
 		return true;
 	}
