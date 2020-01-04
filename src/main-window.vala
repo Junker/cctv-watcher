@@ -5,6 +5,10 @@ using Gee;
 public class MainWindow : ApplicationWindow
 {
 	[GtkChild] public Grid camera_grid;
+	[GtkChild] public Alignment camera_view;
+	[GtkChild] public ToolButton back_button;
+
+	private RendererWidget empty_renderer_widget;
 
 	public MainWindow (Gtk.Application application)
 	{
@@ -47,6 +51,19 @@ public class MainWindow : ApplicationWindow
 	{
 		var dialog = new SettingsDialog();
 		dialog.run();
+	}
+
+	[GtkCallback]
+	public void on_back_button_clicked()
+	{
+		back_button.hide();
+
+		Widget widget = camera_view.get_children().data;
+
+		camera_view.remove(widget);
+		empty_renderer_widget.add(widget);
+
+		camera_grid.show();
 	}
 
 	[GtkCallback]
@@ -128,5 +145,16 @@ public class MainWindow : ApplicationWindow
 
 		camera_grid.show_all();
 	}
+
+	public void show_renderer_fullscreen(RendererWidget widget)
+	{
+		empty_renderer_widget = widget;
+		widget.remove(widget.gst_widget);
+		camera_view.add(widget.gst_widget);
+
+		camera_grid.hide();
+		back_button.show();
+	}
+
 
 }

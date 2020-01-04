@@ -3,21 +3,22 @@ using Gtk;
 public class RendererWidget : Frame
 {
 	public Renderer renderer;
+	public Widget gst_widget;
 
 	public RendererWidget(Renderer renderer, string label)
 	{
-		Object(label: label);
+		var label_widget = new Label("<b>"+label+"</b>");
+		label_widget.set_use_markup(true);
+		this.set_label_widget(label_widget);
 
 		this.renderer = renderer;
 
-		Widget widget;
+		renderer.sink.get("widget", out gst_widget);
 
-		renderer.sink.get("widget", out widget);
+		gst_widget.hexpand = true;
+		gst_widget.vexpand = true;
 
-		widget.hexpand = true;
-		widget.vexpand = true;
-
-		this.add(widget);
+		this.add(gst_widget);
 
 		this.button_press_event.connect(on_button_press);
 	}
@@ -61,6 +62,13 @@ public class RendererWidget : Frame
 
 			return true;
 		}
+
+		if (event.type == Gdk.EventType.BUTTON_PRESS && event.button == 1)
+		{
+			main_window.show_renderer_fullscreen(this);
+		}
+
+
 		return false;
 	}
 }
