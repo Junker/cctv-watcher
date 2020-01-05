@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=CCTV-Watcher
+Comment=CCTV monitoring
+Icon=camera-web
+Categories=AudioVideo;GTK
+Exec=cctv-watcher
+StartupNotify=true
+Terminal=false
