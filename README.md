@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.com/Junker/cctv-watcher.svg?branch=master)](https://travis-ci.com/Junker/cctv-watcher)
 
 <div align="center">
-![Snapshot](.readme/shot.png)
+  <img width="600" height="516`" src=".readme/shot.png">
 </div>
 
 # CCTV Watcher
