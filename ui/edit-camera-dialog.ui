@@ -90,7 +90,6 @@
                     <items>
                       <item id="rtsp" translatable="yes">RTSP</item>
                       <item id="mjpeg" translatable="yes">MJPEG</item>
-                      <item id="onvif" translatable="yes">ONVIF</item>
                       <item id="v4l" translatable="yes">Local</item>
                     </items>
                     <signal name="changed" handler="on_type_combobox_changed" swapped="no"/>
