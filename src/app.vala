@@ -12,7 +12,7 @@ static SysTray systray;
 
 
 extern const string GETTEXT_PACKAGE;
-
+extern const string DATA_DIR;
 
 class App : Gtk.Application
 {

@@ -7,6 +7,13 @@ public class SettingsDialog : Dialog
 	[GtkChild] public CheckButton systray_checkbutton;
 	[GtkChild] public CheckButton minimize_pause_checkbutton;
 
+	private string desktop_autostart_file_path;
+
+	construct
+	{
+		desktop_autostart_file_path = GLib.Path.build_filename(GLib.Environment.get_user_config_dir(), "autostart", "cctv-watcher.desktop");
+	}
+
 
 	public SettingsDialog()
 	{
@@ -25,6 +32,21 @@ public class SettingsDialog : Dialog
 		config.save();
 
 		systray.set_visible(config.systray);
+
+		if (config.startup)
+		{
+			File desktop_file = File.new_build_filename(DATA_DIR, "cctv-watcher.desktop");
+			File autostart_file = File.new_for_path(desktop_autostart_file_path);
+
+			desktop_file.copy(autostart_file, FileCopyFlags.NONE);
+		}
+		else
+		{
+			File file = File.new_for_path(desktop_autostart_file_path);
+
+			if (file.query_exists())
+				file.@delete();
+		}
 
 		this.destroy();
 	}

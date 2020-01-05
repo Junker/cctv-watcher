@@ -12,9 +12,12 @@ dependencies = [
     dependency('gstreamer-rtsp-1.0'),
 ]
 
+prefix = get_option('prefix')
+datadir = get_option('datadir')
+project_datadir = join_paths(prefix, datadir, meson.project_name())
 
-
-add_project_arguments('-DGETTEXT_PACKAGE="cctv-watcher"', language: 'c')
+add_project_arguments('-DGETTEXT_PACKAGE="@0@"'.format(meson.project_name()), language: 'c')
+add_project_arguments('-DDATA_DIR="@0@"'.format(project_datadir), language: 'c')
 
 sources = [
 	'src/main-window.vala',
@@ -45,11 +48,10 @@ resources = gnome.compile_resources(
     source_dir: 'ui',
 )
 
+install_data('cctv-watcher.desktop', install_dir: join_paths(datadir, 'applications'))
+install_data('cctv-watcher.desktop', install_dir: project_datadir)
+
 vala_flags = '--gresourcesdir=' + join_paths(meson.current_source_dir(), 'ui')
-
-install_desktoppath = join_paths(get_option('datadir'), 'applications')
-
-# install_data('cctv-watcher.desktop', install_dir: install_desktoppath)
 
 executable('cctv-watcher', 'src/app.vala',
 		   sources,
