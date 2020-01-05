@@ -8,8 +8,6 @@ public class MainWindow : ApplicationWindow
 	[GtkChild] public Alignment camera_view;
 	[GtkChild] public ToolButton back_button;
 
-	private RendererWidget empty_renderer_widget;
-
 	public MainWindow (Gtk.Application application)
 	{
 		GLib.Object (application: application);
@@ -36,7 +34,6 @@ public class MainWindow : ApplicationWindow
 
 	[GtkCallback]
 	public void on_add_button_clicked(ToolButton button)
-
 	{
 		EditCameraDialog.add_camera();
 	}
@@ -62,8 +59,7 @@ public class MainWindow : ApplicationWindow
 		Widget widget = camera_view.get_children().data;
 
 		camera_view.remove(widget);
-		empty_renderer_widget.add(widget);
-
+		camera_grid.attach(widget, (widget as RendererWidget).prev_col, (widget as RendererWidget).prev_row);
 		camera_grid.show();
 	}
 
@@ -106,10 +102,17 @@ public class MainWindow : ApplicationWindow
 		}
 		renderers = new ArrayList<Renderer>();
 
+		foreach(Widget widget in camera_view.get_children())
+		{
+			camera_view.remove(widget);
+		}
+
 		foreach(Widget widget in camera_grid.get_children())
 		{
 			camera_grid.remove(widget);
 		}
+
+		camera_grid.show();
 
 		int camera_count = cameras.size;
 		int per_row;
@@ -149,7 +152,7 @@ public class MainWindow : ApplicationWindow
 			else
 				continue;
 
-			camera_grid.attach(renderer.get_widget(), row, col);
+			camera_grid.attach(renderer.get_widget(), col, row);
 			renderer.play();
 
 			renderers.add(renderer);
@@ -162,9 +165,9 @@ public class MainWindow : ApplicationWindow
 
 	public void show_renderer_fullscreen(RendererWidget widget)
 	{
-		empty_renderer_widget = widget;
-		widget.remove(widget.gst_widget);
-		camera_view.add(widget.gst_widget);
+		camera_grid.child_get(widget, "left-attach", out widget.prev_col, "top-attach", out widget.prev_row);
+		camera_grid.remove(widget);
+		camera_view.add(widget);
 
 		camera_grid.hide();
 		back_button.show();

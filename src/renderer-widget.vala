@@ -3,13 +3,31 @@ using Gtk;
 public class RendererWidget : Frame
 {
 	public Renderer renderer;
-	public Widget gst_widget;
+
+	private Widget gst_widget;
+	private Overlay overlay;
+	private Spinner spinner;
+
+	public int prev_row;
+	public int prev_col;
 
 	public RendererWidget(Renderer renderer, string label)
 	{
 		var label_widget = new Label("<b>"+label+"</b>");
 		label_widget.set_use_markup(true);
 		this.set_label_widget(label_widget);
+
+		overlay = new Overlay();
+		overlay.hexpand = true;
+		overlay.vexpand = true;
+		this.add(overlay);
+
+		spinner = new Spinner();
+		spinner.hexpand = true;
+		spinner.vexpand = true;
+
+		overlay.add_overlay(spinner);
+		overlay.set_overlay_pass_through(spinner, true);
 
 		this.renderer = renderer;
 
@@ -18,7 +36,7 @@ public class RendererWidget : Frame
 		gst_widget.hexpand = true;
 		gst_widget.vexpand = true;
 
-		this.add(gst_widget);
+		overlay.add(gst_widget);
 
 		this.button_press_event.connect(on_button_press);
 	}
@@ -57,6 +75,7 @@ public class RendererWidget : Frame
 				renderer.stop();
 				cameras.remove(renderer.camera);
 				config.save();
+
 				main_window.refresh_cameras();
 			});
 
@@ -65,10 +84,24 @@ public class RendererWidget : Frame
 
 		if (event.type == Gdk.EventType.BUTTON_PRESS && event.button == 1)
 		{
-			main_window.show_renderer_fullscreen(this);
+			if (this.parent is Grid)
+			{
+				main_window.show_renderer_fullscreen(this);
+			}
 		}
 
 
 		return false;
 	}
+
+	public void show_spinner()
+	{
+		spinner.start();
+	}
+
+	public void hide_spinner()
+	{
+		spinner.stop();
+	}
+
 }

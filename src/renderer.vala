@@ -8,6 +8,7 @@ public abstract class Renderer : GLib.Object
 	public Pipeline pipeline;
 	public Gst.Bus bus;
 	public Camera camera;
+	public RendererWidget widget;
 
 	protected Renderer(Camera camera)
 	{
@@ -51,15 +52,14 @@ public abstract class Renderer : GLib.Object
 			return;
 		}
 
+		widget = new RendererWidget(this, camera.name);
 
 		bus = pipeline.get_bus();
-		bus.add_watch (0, this.on_gst_message);
+		bus.add_watch (0, this.on_pipeline_message);
 	}
 
 	public Gtk.Widget get_widget()
 	{
-		RendererWidget widget = new RendererWidget(this, camera.name);
-
 		return widget;
 	}
 
@@ -91,7 +91,7 @@ public abstract class Renderer : GLib.Object
 			debug("	 Link succeeded (type '%s').\n", new_pad_type);
 	}
 
-	private bool on_gst_message(Gst.Bus bus, Gst.Message msg)
+	private bool on_pipeline_message(Gst.Bus bus, Gst.Message msg)
 	{
 		//Receive application messages from the bus.//
 		if(msg.type == MessageType.ERROR)
@@ -102,10 +102,13 @@ public abstract class Renderer : GLib.Object
 			msg.parse_error (out err, out debug_info);
 			show_error_dialog("Camera:'%s', element: '%s': %s\n".printf(camera.name, msg.src.name, err.message), main_window);
 			debug("Debugging information: %s\n", (debug_info != null)? debug_info : "none");
+
+			widget.hide_spinner();
 		}
 
 		if (msg.type == MessageType.EOS)
 		{
+			widget.hide_spinner();
 			stdout.printf ("end of stream\n");
 		}
 		if (msg.type == MessageType.STATE_CHANGED)
@@ -114,6 +117,12 @@ public abstract class Renderer : GLib.Object
 			Gst.State newstate;
 			Gst.State pending;
 			msg.parse_state_changed (out oldstate, out newstate, out pending);
+
+			if (newstate == Gst.State.PLAYING)
+				widget.hide_spinner();
+
+			if (newstate == Gst.State.PAUSED && pending == Gst.State.PLAYING)
+				widget.show_spinner();
 
 			debug("state changed: %s->%s:%s\n",
 				  oldstate.to_string (), newstate.to_string (),
@@ -136,6 +145,11 @@ public abstract class Renderer : GLib.Object
 	public void stop()
 	{
 		this.pipeline.set_state(Gst.State.NULL);
+	}
+
+	public void pause()
+	{
+		this.pipeline.set_state(Gst.State.PAUSED);
 	}
 
 	public void restart()
