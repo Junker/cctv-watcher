@@ -11,11 +11,6 @@ Application for CCTV cameras monitoring. RTSP, MJPEG, V4L2 cameras supported.
 * Gstreamer (gstreamer-libav, gstreamer-rtsp)
 * Gtk
 
-### Control
-* Left-Button click - mute/unmute
-* Middle-Button click - mixer
-* Srcoll - Volume up/down
-
 ### Build & Install
 
 	meson build --prefix=/usr
