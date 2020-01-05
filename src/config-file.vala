@@ -3,7 +3,7 @@ public class ConfigFile
 	public KeyFile file;
 	public string filename;
 	public bool startup = false;
-	public bool systray = false;
+	public bool systray = true;
 	public bool minimize_pause = true;
 
 	public ConfigFile()
