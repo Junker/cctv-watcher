@@ -123,7 +123,14 @@ public class EditCameraDialog : Dialog
 			if (new_camera == null)
 				return;
 
-			cameras.add(new_camera);
+			if (this.camera != null)
+			{
+				cameras.insert(cameras.index_of(this.camera), new_camera);
+				cameras.remove(this.camera);
+			}
+			else
+				cameras.add(new_camera);
+
 		}
 		catch (CameraError e)
 		{
@@ -131,8 +138,6 @@ public class EditCameraDialog : Dialog
 		}
 
 
-		if (this.camera != null)
-			cameras.remove(this.camera);
 
 		config.save();
 
