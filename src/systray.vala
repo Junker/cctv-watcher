@@ -17,13 +17,28 @@ public class SysTray : StatusIcon
 		{
 			if (event.button == 1)
 			{
-				foreach (Renderer renderer in renderers)
+				if (main_window.is_active)
 				{
-					renderer.play();
-				}
+					if (config.minimize_pause)
+					{
+						foreach (Renderer renderer in renderers)
+						{
+							renderer.stop();
+						}
+					}
 
-				main_window.show();
-				main_window.present();
+					main_window.hide();
+				}
+				else
+				{
+					foreach (Renderer renderer in renderers)
+					{
+						renderer.play();
+					}
+
+					main_window.show();
+					main_window.present();
+				}
 			}
 		});
 
