@@ -1,5 +1,9 @@
 [![Build Status](https://travis-ci.com/Junker/cctv-watcher.svg?branch=master)](https://travis-ci.com/Junker/cctv-watcher)
 
+<div align="center">
+![Snapshot](.readme/shot.png)
+</div>
+
 # CCTV Watcher
 Application for CCTV cameras monitoring. RTSP, MJPEG, V4L2 cameras supported.
 
