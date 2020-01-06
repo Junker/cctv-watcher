@@ -18,3 +18,5 @@ Application for CCTV cameras monitoring. RTSP, MJPEG, V4L2 cameras supported.
 	ninja
 	sudo ninja install
 
+### Install from Arch Linux & Manjaro 
+	yaourt -S cctv-watcher
