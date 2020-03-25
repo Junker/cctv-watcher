@@ -27,9 +27,19 @@ public abstract class Renderer : GLib.Object
 		else
 			decoder = ElementFactory.make("decodebin", "decoder"); 
 
-		if (decoder == null || convert == null || sink == null)
+		if (decoder == null)
 		{
-			show_error_dialog("Not all elements could be created.\n", main_window);
+			show_error_dialog(camera.name+": Decoder could not be created.\n", main_window);
+			return;
+		}
+		if (convert == null)
+		{
+			show_error_dialog(camera.name+": Convert could not be created.\n", main_window);
+			return;
+		}
+		if (sink == null)
+		{
+			show_error_dialog(camera.name+": Sink could not be created.\n", main_window);
 			return;
 		}
 
@@ -39,7 +49,7 @@ public abstract class Renderer : GLib.Object
 		{
 			if(!decoder.link(convert))
 			{
-				stderr.printf("decoder<->convert Elements could not be linked.\n");
+				show_error_dialog("decoder<->convert Elements could not be linked.\n", main_window);
 				return;
 			}
 		}
