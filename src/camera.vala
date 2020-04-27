@@ -58,9 +58,11 @@ public abstract class Camera : Object
 				return "h265";
 			case CameraCodec.MJPEG:
 				return "mjpeg";
-			default:
-				return null;
+			case CameraCodec.AUTO:
+				return "auto";
 		}
+
+		return null;
 	}
 
 }

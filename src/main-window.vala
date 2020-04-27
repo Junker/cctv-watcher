@@ -21,10 +21,7 @@ public class MainWindow : ApplicationWindow
 			this.hide();
 
 			if (config.minimize_pause)
-			{
-				foreach (Renderer renderer in renderers)
-					renderer.stop();
-			}
+				this.stop_renderers();
 		}
 		else
 			this.destroy();
@@ -71,14 +68,11 @@ public class MainWindow : ApplicationWindow
 			if ((event.new_window_state & Gdk.WindowState.ICONIFIED) != 0)
 			{
 				// this.hide();
-
-				foreach (Renderer renderer in renderers)
-					renderer.stop();
+				this.stop_renderers();
 			}
 			else
 			{
-				foreach (Renderer renderer in renderers)
-					renderer.play();
+				this.play_renderers();
 			}
 		}
 
@@ -94,13 +88,29 @@ public class MainWindow : ApplicationWindow
 		app.destroy();
 	}
 
-	public void refresh_cameras()
+	public void stop_renderers()
 	{
 		foreach (Renderer renderer in renderers)
-		{
+			renderer.stop();
+	}
+
+	public void play_renderers()
+	{
+		foreach (Renderer renderer in renderers)
+			renderer.play();
+	}
+
+	public void clear_renderers()
+	{
+		foreach (Renderer renderer in renderers)
 			renderer.pipeline.set_state(Gst.State.NULL);
-		}
+
 		renderers = new ArrayList<Renderer>();
+	}
+
+	public void refresh_cameras()
+	{
+		this.clear_renderers();
 
 		foreach(Widget widget in camera_view.get_children())
 		{
@@ -172,6 +182,4 @@ public class MainWindow : ApplicationWindow
 		camera_grid.hide();
 		back_button.show();
 	}
-
-
 }

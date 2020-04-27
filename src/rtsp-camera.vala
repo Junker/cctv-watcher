@@ -55,17 +55,11 @@ public class RtspCamera : Camera
 		switch(proto)
 		{
 			case RtspProto.UDP:
-			{
 				return "udp";
-			}
 			case RtspProto.TCP:
-			{
 				return "tcp";
-			}
 			case RtspProto.AUTO:
-			{
 				return "auto";
-			}
 		}
 
 		return "auto";

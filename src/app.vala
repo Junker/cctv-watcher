@@ -24,11 +24,20 @@ class App : Gtk.Application
 		renderers = new ArrayList<Renderer>();
 
 		main_window = new MainWindow(this);
-		main_window.show();
 
 		if (config.load())
 		{
+			main_window.maximize();
 			main_window.refresh_cameras();
+
+			if (config.systray)
+				main_window.stop_renderers();
+			else
+				main_window.show();
+
+
+
+
 		}
 
 		systray = new SysTray();
@@ -38,10 +47,7 @@ class App : Gtk.Application
 
 	public void destroy()
 	{
-		foreach (Renderer renderer in renderers)
-		{
-			renderer.stop();
-		}
+		main_window.stop_renderers();
 
 		this.quit();
 		Gtk.main_quit();

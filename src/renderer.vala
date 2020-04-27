@@ -30,17 +30,14 @@ public abstract class Renderer : GLib.Object
 		if (decoder == null)
 		{
 			show_error_dialog(camera.name+": Decoder could not be created.\n", main_window);
-			return;
 		}
 		if (convert == null)
 		{
 			show_error_dialog(camera.name+": Convert could not be created.\n", main_window);
-			return;
 		}
 		if (sink == null)
 		{
 			show_error_dialog(camera.name+": Sink could not be created.\n", main_window);
-			return;
 		}
 
 		pipeline.add_many(decoder, convert, sink);
@@ -50,7 +47,6 @@ public abstract class Renderer : GLib.Object
 			if(!decoder.link(convert))
 			{
 				show_error_dialog("decoder<->convert Elements could not be linked.\n", main_window);
-				return;
 			}
 		}
 		else
@@ -59,7 +55,6 @@ public abstract class Renderer : GLib.Object
 		if (!convert.link(sink))
 		{
 			show_error_dialog("convert<->sink Elements could not be linked.", main_window);
-			return;
 		}
 
 		widget = new RendererWidget(this, camera.name);

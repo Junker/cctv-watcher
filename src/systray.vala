@@ -21,20 +21,14 @@ public class SysTray : StatusIcon
 				{
 					if (config.minimize_pause)
 					{
-						foreach (Renderer renderer in renderers)
-						{
-							renderer.stop();
-						}
+						main_window.stop_renderers();
 					}
 
 					main_window.hide();
 				}
 				else
 				{
-					foreach (Renderer renderer in renderers)
-					{
-						renderer.play();
-					}
+					main_window.play_renderers();
 
 					main_window.show();
 					main_window.present();
