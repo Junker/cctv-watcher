@@ -23,6 +23,7 @@ add_project_arguments('-DDATA_DIR="@0@"'.format(project_datadir), language: 'c')
 sources = [
 	'src/main-window.vala',
 	'src/edit-camera-dialog.vala',
+	'src/camera-list-dialog.vala',
 	'src/app.vala',
 	'src/config-file.vala',
 	'src/camera.vala',

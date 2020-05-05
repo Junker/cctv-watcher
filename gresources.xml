@@ -4,5 +4,6 @@
     <file compressed="true" preprocess="xml-stripblanks">main-window.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">edit-camera-dialog.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">settings-dialog.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">camera-list-dialog.ui</file>
   </gresource>
 </gresources>

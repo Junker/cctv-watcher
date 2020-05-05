@@ -67,7 +67,6 @@ public class EditCameraDialog : Dialog
 				show_error_dialog("This name already used ", this);
 				return;
 			}
-
 		}
 
 		try

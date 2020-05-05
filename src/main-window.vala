@@ -36,6 +36,13 @@ public class MainWindow : ApplicationWindow
 	}
 
 	[GtkCallback]
+	public void on_edit_button_clicked(ToolButton button)
+	{
+		var dialog = new CameraListDialog();
+		dialog.run();
+	}
+
+	[GtkCallback]
 	public void on_refresh_button_clicked(ToolButton button)
 	{
 		refresh_cameras();
