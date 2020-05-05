@@ -5,7 +5,7 @@ using Gee;
 public class MainWindow : ApplicationWindow
 {
 	[GtkChild] public Grid camera_grid;
-	[GtkChild] public Alignment camera_view;
+	[GtkChild] public Box camera_view;
 	[GtkChild] public ToolButton back_button;
 
 	public MainWindow (Gtk.Application application)

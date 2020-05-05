@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.22.1 -->
+<!-- Generated with glade 3.22.2 -->
 <interface>
   <requires lib="gtk+" version="3.20"/>
   <template class="MainWindow" parent="GtkApplicationWindow">
@@ -7,7 +7,7 @@
     <signal name="delete-event" handler="on_delete_event" swapped="no"/>
     <signal name="destroy" handler="on_destroy" swapped="no"/>
     <signal name="window-state-event" handler="on_window_state_event" swapped="no"/>
-    <child>
+    <child type="titlebar">
       <placeholder/>
     </child>
     <child>
@@ -127,9 +127,11 @@
           </packing>
         </child>
         <child>
-          <object class="GtkAlignment" id="camera_view">
+          <object class="GtkBox" id="camera_view">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
+            <property name="orientation">vertical</property>
+            <property name="homogeneous">True</property>
             <child>
               <placeholder/>
             </child>
