@@ -20,7 +20,7 @@ public void show_error_dialog(string message, Gtk.Window? transient_for)
 
 
 
-int array_search(string needle, string[] haystack)
+public int array_search(string needle, string[] haystack)
 {
     int result = -1;
 
@@ -32,7 +32,7 @@ int array_search(string needle, string[] haystack)
     return result;
 }
 
-bool string_empty(string? str)
+public bool string_empty(string? str)
 {
 	return (str == null || str._strip() == "");
 }
