@@ -240,7 +240,10 @@ public class EditCameraDialog : Dialog
 			dialog.v4l_device_combobox.set_active_id(cam.device);
 
 			if (dialog.v4l_device_combobox.active_id == null)
+			{
 				dialog.v4l_device_combobox.append(cam.device, cam.device);
+				dialog.v4l_device_combobox.set_active_id(cam.device);
+			}
 		}
 
 		dialog.show();
