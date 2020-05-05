@@ -10,6 +10,7 @@ Application for CCTV cameras monitoring. RTSP, MJPEG, V4L2 cameras supported.
 ### Requirements
 * Gstreamer (gstreamer-libav, gstreamer-rtsp, gstreamer-gtk)
 * Gtk
+* libgudev
 
 ### Build & Install
 
