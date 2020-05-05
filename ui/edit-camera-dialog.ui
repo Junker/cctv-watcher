@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.22.1 -->
+<!-- Generated with glade 3.22.2 -->
 <interface>
   <requires lib="gtk+" version="3.20"/>
   <template class="EditCameraDialog" parent="GtkDialog">
@@ -7,7 +7,7 @@
     <property name="can_focus">False</property>
     <property name="modal">True</property>
     <property name="type_hint">dialog</property>
-    <child>
+    <child type="titlebar">
       <placeholder/>
     </child>
     <child internal-child="vbox">
@@ -514,10 +514,9 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkEntry" id="v4l_device_entry">
+                              <object class="GtkComboBoxText" id="v4l_device_combobox">
                                 <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="tooltip_text" translatable="yes">local device, e.g., /dev/video0</property>
+                                <property name="can_focus">False</property>
                                 <property name="hexpand">True</property>
                               </object>
                               <packing>

@@ -8,6 +8,7 @@ dependencies = [
     dependency('gtk+-3.0', version : '>=3.22'),
     dependency('gee-0.8'),
     dependency('gmodule-2.0'),
+    dependency('gudev-1.0'),
     dependency('gstreamer-1.0'),
     dependency('gstreamer-rtsp-1.0'),
 ]

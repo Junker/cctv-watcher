@@ -1,5 +1,6 @@
 using Gtk;
 using Gee;
+using GUdev;
 
 [GtkTemplate (ui = "/app/junker/cctv-watcher/edit-camera-dialog.ui")]
 public class EditCameraDialog : Dialog 
@@ -22,12 +23,14 @@ public class EditCameraDialog : Dialog
 	[GtkChild] public CheckButton mjpeg_auth_checkbutton;
 	[GtkChild] public Entry mjpeg_username_entry;
 	[GtkChild] public Entry mjpeg_password_entry;
-	[GtkChild] public Entry v4l_device_entry;
+	[GtkChild] public ComboBoxText v4l_device_combobox;
 
 
 	public EditCameraDialog()
 	{
 		this.on_type_combobox_changed(type_combobox);
+
+		this.v4l_load_camera_list();
 	}
 
 	[GtkCallback]
@@ -114,7 +117,7 @@ public class EditCameraDialog : Dialog
 					new_camera = new V4lCamera(camera_name);
 					var cam = new_camera as V4lCamera;
 
-					cam.set_device(v4l_device_entry.text);
+					cam.set_device(v4l_device_combobox.active_id);
 
 					break;
 				}
@@ -230,12 +233,29 @@ public class EditCameraDialog : Dialog
 		}
 		else if (camera is V4lCamera)
 		{
+			dialog.type_combobox.set_active_id(CameraType.V4L);
+
 			var cam = camera as V4lCamera;
-			dialog.v4l_device_entry.text = cam.device;
+
+			dialog.v4l_device_combobox.set_active_id(cam.device);
+
+			if (dialog.v4l_device_combobox.active_id == null)
+				dialog.v4l_device_combobox.append(cam.device, cam.device);
 		}
 
 		dialog.show();
 
 		return dialog;
+	}
+
+	private void v4l_load_camera_list()
+	{
+		var client = new GUdev.Client(null);
+		var devices = client.query_by_subsystem("video4linux");
+
+		foreach (var dev in devices)
+		{
+			v4l_device_combobox.append(dev.get_device_file(), "%s (%s)".printf(dev.get_property("ID_V4L_PRODUCT"), dev.get_device_file()));
+		}
 	}
 }

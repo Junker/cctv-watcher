@@ -16,7 +16,7 @@ public class V4lCamera : Camera
 		var file = File.new_for_path(sdevice);
 
 		if (!file.query_exists())
-			throw new CameraError.WRONG_PARAM("Device doesn't exists");
+			throw new CameraError.WRONG_PARAM("Device %s doesn't exists".printf(sdevice));
 
 		if (file.query_file_type(FileQueryInfoFlags.NONE) != FileType.SPECIAL)
 			throw new CameraError.WRONG_PARAM("Wrong device, should be in /dev folder, e.g., /dev/video0");
