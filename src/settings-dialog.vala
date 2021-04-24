@@ -1,7 +1,7 @@
 using Gtk;
 
 [GtkTemplate (ui = "/app/junker/cctv-watcher/settings-dialog.ui")]
-public class SettingsDialog : Dialog 
+public class SettingsDialog : Dialog
 {
 	[GtkChild] public CheckButton startup_checkbutton;
 	[GtkChild] public CheckButton systray_checkbutton;

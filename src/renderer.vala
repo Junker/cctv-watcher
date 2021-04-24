@@ -25,7 +25,7 @@ public abstract class Renderer : GLib.Object
 		else if (camera.codec == CameraCodec.MJPEG)
 			decoder = ElementFactory.make("jpegdec", "decoder");
 		else
-			decoder = ElementFactory.make("decodebin", "decoder"); 
+			decoder = ElementFactory.make("decodebin", "decoder");
 
 		if (decoder == null)
 		{
@@ -90,7 +90,7 @@ public abstract class Renderer : GLib.Object
 
 		// Attempt the link:
 		Gst.PadLinkReturn ret = new_pad.link (sink_pad);
-		if (ret != Gst.PadLinkReturn.OK) 
+		if (ret != Gst.PadLinkReturn.OK)
 			debug("	 Type is '%s' but link failed.\n", new_pad_type);
 		else
 			debug("	 Link succeeded (type '%s').\n", new_pad_type);

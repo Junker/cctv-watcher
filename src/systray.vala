@@ -1,14 +1,14 @@
 using Gtk;
 
-public class SysTray : StatusIcon 
+public class SysTray : StatusIcon
 {
 	public Gtk.Menu context_menu;
 
-	construct 
+	construct
 	{
 		this.set_from_icon_name("camera-web");
 
-		this.popup_menu.connect(() => 
+		this.popup_menu.connect(() =>
 		{
 			this.context_menu.popup_at_pointer();
 		});

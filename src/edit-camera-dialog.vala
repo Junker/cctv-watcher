@@ -3,7 +3,7 @@ using Gee;
 using GUdev;
 
 [GtkTemplate (ui = "/app/junker/cctv-watcher/edit-camera-dialog.ui")]
-public class EditCameraDialog : Dialog 
+public class EditCameraDialog : Dialog
 {
 	private Camera? camera = null;
 
@@ -204,7 +204,7 @@ public class EditCameraDialog : Dialog
 		var dialog = new EditCameraDialog();
 
 		dialog.camera = camera;
-		
+
 		dialog.name_entry.text = camera.name;
 
 		if (camera is RtspCamera)

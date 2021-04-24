@@ -59,7 +59,7 @@ class App : Gtk.Application
 	}
 }
 
-static int main (string[] args) 
+static int main (string[] args)
 {
 	Gst.init (ref args);
 

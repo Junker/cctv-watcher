@@ -136,9 +136,9 @@ public class MainWindow : ApplicationWindow
 
 		if (camera_count == 1)
 			per_row = 1;
-		else if (camera_count >= 2 && camera_count <= 4) 
+		else if (camera_count >= 2 && camera_count <= 4)
 			per_row = 2;
-		else if (camera_count > 4 && camera_count <= 9) 
+		else if (camera_count > 4 && camera_count <= 9)
 			per_row = 3;
 		else
 			per_row = 4;

@@ -3,7 +3,7 @@ using Gee;
 using GUdev;
 
 [GtkTemplate (ui = "/app/junker/cctv-watcher/camera-list-dialog.ui")]
-public class CameraListDialog : Dialog 
+public class CameraListDialog : Dialog
 {
 	[GtkChild] public TreeView camera_tree_view;
 	[GtkChild] public TreeSelection camera_tree_selection;

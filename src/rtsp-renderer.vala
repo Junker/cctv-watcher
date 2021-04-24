@@ -75,7 +75,7 @@ public class RtspRenderer : Renderer
 
 	public void on_rtsp_pad_added(Gst.Element src, Gst.Pad new_pad)
 	{
-		var next_element = this.camera.codec == CameraCodec.AUTO ? this.decoder : this.depay; 
+		var next_element = this.camera.codec == CameraCodec.AUTO ? this.decoder : this.depay;
 
 		Gst.Pad sink_pad = next_element.get_static_pad("sink");
 		stdout.printf("Received new pad '%s' from '%s':\n", new_pad.name, src.name);

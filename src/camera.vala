@@ -80,4 +80,3 @@ public errordomain CameraError
 	WRONG_PARAM,
 	ERROR
 }
-
