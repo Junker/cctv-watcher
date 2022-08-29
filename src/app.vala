@@ -34,10 +34,6 @@ class App : Gtk.Application
 				main_window.stop_renderers();
 			else
 				main_window.show();
-
-
-
-
 		}
 
 		systray = new SysTray();

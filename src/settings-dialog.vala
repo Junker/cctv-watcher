@@ -3,9 +3,9 @@ using Gtk;
 [GtkTemplate (ui = "/app/junker/cctv-watcher/settings-dialog.ui")]
 public class SettingsDialog : Dialog
 {
-	[GtkChild] public CheckButton startup_checkbutton;
-	[GtkChild] public CheckButton systray_checkbutton;
-	[GtkChild] public CheckButton minimize_pause_checkbutton;
+	[GtkChild] public unowned CheckButton startup_checkbutton;
+	[GtkChild] public unowned CheckButton systray_checkbutton;
+	[GtkChild] public unowned CheckButton minimize_pause_checkbutton;
 
 	private string desktop_autostart_file_path;
 

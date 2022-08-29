@@ -5,11 +5,11 @@ using GUdev;
 [GtkTemplate (ui = "/app/junker/cctv-watcher/camera-list-dialog.ui")]
 public class CameraListDialog : Dialog
 {
-	[GtkChild] public TreeView camera_tree_view;
-	[GtkChild] public TreeSelection camera_tree_selection;
-	[GtkChild] public Gtk.ListStore camera_list_store;
-	[GtkChild] public Button edit_button;
-	[GtkChild] public Button delete_button;
+	[GtkChild] public unowned TreeView camera_tree_view;
+	[GtkChild] public unowned TreeSelection camera_tree_selection;
+	[GtkChild] public unowned Gtk.ListStore camera_list_store;
+	[GtkChild] public unowned Button edit_button;
+	[GtkChild] public unowned Button delete_button;
 
 	enum Columns
 	{

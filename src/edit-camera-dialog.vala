@@ -7,24 +7,23 @@ public class EditCameraDialog : Dialog
 {
 	private Camera? camera = null;
 
-	[GtkChild] public ComboBoxText type_combobox;
-	[GtkChild] public Entry name_entry;
-	[GtkChild] public Grid rtsp_grid;
-	[GtkChild] public Grid onvif_grid;
-	[GtkChild] public Grid mjpeg_grid;
-	[GtkChild] public Grid v4l_grid;
-	[GtkChild] public Entry rtsp_url_entry;
-	[GtkChild] public CheckButton rtsp_auth_checkbutton;
-	[GtkChild] public Entry rtsp_username_entry;
-	[GtkChild] public Entry rtsp_password_entry;
-	[GtkChild] public ComboBoxText rtsp_proto_combobox;
-	[GtkChild] public ComboBoxText rtsp_codec_combobox;
-	[GtkChild] public Entry mjpeg_url_entry;
-	[GtkChild] public CheckButton mjpeg_auth_checkbutton;
-	[GtkChild] public Entry mjpeg_username_entry;
-	[GtkChild] public Entry mjpeg_password_entry;
-	[GtkChild] public ComboBoxText v4l_device_combobox;
-
+	[GtkChild] public unowned ComboBoxText type_combobox;
+	[GtkChild] public unowned Entry name_entry;
+	[GtkChild] public unowned Grid rtsp_grid;
+	[GtkChild] public unowned Grid onvif_grid;
+	[GtkChild] public unowned Grid mjpeg_grid;
+	[GtkChild] public unowned Grid v4l_grid;
+	[GtkChild] public unowned Entry rtsp_url_entry;
+	[GtkChild] public unowned CheckButton rtsp_auth_checkbutton;
+	[GtkChild] public unowned Entry rtsp_username_entry;
+	[GtkChild] public unowned Entry rtsp_password_entry;
+	[GtkChild] public unowned ComboBoxText rtsp_proto_combobox;
+	[GtkChild] public unowned ComboBoxText rtsp_codec_combobox;
+	[GtkChild] public unowned Entry mjpeg_url_entry;
+	[GtkChild] public unowned CheckButton mjpeg_auth_checkbutton;
+	[GtkChild] public unowned Entry mjpeg_username_entry;
+	[GtkChild] public unowned Entry mjpeg_password_entry;
+	[GtkChild] public unowned ComboBoxText v4l_device_combobox;
 
 	public EditCameraDialog()
 	{
@@ -107,7 +106,7 @@ public class EditCameraDialog : Dialog
 				case CameraType.ONVIF:
 				{
 					new_camera = new OnvifCamera(camera_name);
-					var cam = new_camera as OnvifCamera;
+					// var cam = new_camera as OnvifCamera;
 
 					break;
 				}

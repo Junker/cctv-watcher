@@ -135,15 +135,16 @@ public class ConfigFile
 		file.set_boolean("settings", "systray", config.systray);
 		file.set_boolean("settings", "minimize_pause", config.minimize_pause);
 
-		//delete all cameras
-		foreach (string group in file.get_groups())
-		{
-			if (group.has_prefix("camera:"))
-				file.remove_group(group);
-		}
 
 		try
 		{
+			//delete all cameras
+			foreach (string group in file.get_groups())
+			{
+				if (group.has_prefix("camera:"))
+					file.remove_group(group);
+			}
+
 			var config_dir = GLib.Path.get_dirname(this.filename);
 			DirUtils.create(config_dir, 0755);
 

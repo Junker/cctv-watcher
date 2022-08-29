@@ -4,9 +4,9 @@ using Gee;
 [GtkTemplate (ui = "/app/junker/cctv-watcher/main-window.ui")]
 public class MainWindow : ApplicationWindow
 {
-	[GtkChild] public Grid camera_grid;
-	[GtkChild] public Box camera_view;
-	[GtkChild] public ToolButton back_button;
+	[GtkChild] public unowned Grid camera_grid;
+	[GtkChild] public unowned Box camera_view;
+	[GtkChild] public unowned ToolButton back_button;
 
 	public MainWindow (Gtk.Application application)
 	{
