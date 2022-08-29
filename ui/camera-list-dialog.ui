@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.22.2 -->
+<!-- Generated with glade 3.40.0 -->
 <interface>
   <requires lib="gtk+" version="3.20"/>
   <object class="GtkListStore" id="camera_list_store">
@@ -13,34 +13,31 @@
     </columns>
   </object>
   <template class="CameraListDialog" parent="GtkDialog">
-    <property name="can_focus">False</property>
+    <property name="can-focus">False</property>
     <property name="title" translatable="yes">Cameras List</property>
     <property name="modal">True</property>
-    <property name="type_hint">dialog</property>
-    <child type="titlebar">
-      <placeholder/>
-    </child>
+    <property name="type-hint">dialog</property>
     <child internal-child="vbox">
       <object class="GtkBox">
-        <property name="can_focus">False</property>
-        <property name="margin_left">4</property>
-        <property name="margin_right">4</property>
-        <property name="margin_top">4</property>
-        <property name="margin_bottom">4</property>
+        <property name="can-focus">False</property>
+        <property name="margin-left">4</property>
+        <property name="margin-right">4</property>
+        <property name="margin-top">4</property>
+        <property name="margin-bottom">4</property>
         <property name="orientation">vertical</property>
         <property name="spacing">2</property>
         <child internal-child="action_area">
           <object class="GtkButtonBox">
-            <property name="can_focus">False</property>
-            <property name="layout_style">end</property>
+            <property name="can-focus">False</property>
+            <property name="layout-style">end</property>
             <child>
               <object class="GtkButton" id="edit_button">
                 <property name="label">gtk-edit</property>
                 <property name="visible">True</property>
                 <property name="sensitive">False</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="use_stock">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">True</property>
+                <property name="use-stock">True</property>
                 <signal name="clicked" handler="on_edit_button_clicked" swapped="no"/>
               </object>
               <packing>
@@ -54,9 +51,9 @@
                 <property name="label">gtk-remove</property>
                 <property name="visible">True</property>
                 <property name="sensitive">False</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="use_stock">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">True</property>
+                <property name="use-stock">True</property>
                 <signal name="clicked" handler="on_delete_button_clicked" swapped="no"/>
               </object>
               <packing>
@@ -69,9 +66,9 @@
               <object class="GtkButton" id="cancel_button">
                 <property name="label">gtk-cancel</property>
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="use_stock">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">True</property>
+                <property name="use-stock">True</property>
                 <signal name="clicked" handler="on_cancel_button_clicked" swapped="no"/>
               </object>
               <packing>
@@ -89,13 +86,13 @@
         </child>
         <child>
           <object class="GtkTreeView" id="camera_tree_view">
-            <property name="width_request">400</property>
-            <property name="height_request">200</property>
+            <property name="width-request">400</property>
+            <property name="height-request">200</property>
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
+            <property name="can-focus">False</property>
             <property name="model">camera_list_store</property>
-            <property name="level_indentation">3</property>
-            <property name="activate_on_single_click">True</property>
+            <property name="level-indentation">3</property>
+            <property name="activate-on-single-click">True</property>
             <signal name="row-activated" handler="on_camera_tree_view_row_activated" swapped="no"/>
             <child internal-child="selection">
               <object class="GtkTreeSelection" id="camera_tree_selection"/>
