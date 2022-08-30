@@ -3,19 +3,24 @@
 </div>
 
 # CCTV Watcher
+
 Application for CCTV cameras monitoring. RTSP, MJPEG, V4L2 cameras supported.
 
-### Requirements
+## Requirements
+
 * Gstreamer (gstreamer-libav, gstreamer-rtsp, gstreamer-gtk)
 * Gtk
 * libgudev
 
-### Build & Install
+## Build & Install
 
-	meson build --prefix=/usr
-	cd build
-	ninja
-	sudo ninja install
+```bash
+meson build --prefix=/usr
+cd build
+ninja
+sudo ninja install
+```
 
-### Install from Arch Linux & Manjaro 
-	yaourt -S cctv-watcher
+## Install from Arch Linux & Manjaro 
+
+yaourt -S cctv-watcher
