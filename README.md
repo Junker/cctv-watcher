@@ -23,4 +23,6 @@ sudo ninja install
 
 ## Install from Arch Linux & Manjaro 
 
+```bash
 yaourt -S cctv-watcher
+```
