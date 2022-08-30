@@ -39,6 +39,8 @@ public class RtspRenderer : Renderer
 			 	case CameraCodec.MJPEG:
 					depay_name = "rtpjpegdepay";
 					break;
+			 	case CameraCodec.AUTO:
+					break;
 			}
 
 			depay = ElementFactory.make(depay_name, "depay");
@@ -70,6 +72,8 @@ public class RtspRenderer : Renderer
 				source.set("protocols", RTSP.LowerTrans.UDP);
 				break;
 			}
+			case RtspProto.AUTO:
+				break;
 		}
 	}
 
@@ -80,11 +84,11 @@ public class RtspRenderer : Renderer
 		Gst.Pad sink_pad = next_element.get_static_pad("sink");
 		debug("Received new pad '%s' from '%s'", new_pad.name, src.name);
 
-		Gst.Caps new_pad_caps = new_pad.query_caps (null);
-		weak Gst.Structure new_pad_struct = new_pad_caps.get_structure (0);
-		string new_pad_type = new_pad_struct.get_name ();
+		Gst.Caps new_pad_caps = new_pad.query_caps(null);
+		weak Gst.Structure new_pad_struct = new_pad_caps.get_structure(0);
+		string new_pad_type = new_pad_struct.get_name();
 		debug("RTSP: It has type '%s'", new_pad_type);
 
-		Gst.PadLinkReturn ret = new_pad.link (sink_pad);
+		new_pad.link(sink_pad);
 	}
 }
