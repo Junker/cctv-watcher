@@ -10,7 +10,6 @@ static App app;
 static MainWindow main_window;
 static SysTray systray;
 
-
 extern const string GETTEXT_PACKAGE;
 extern const string DATA_DIR;
 

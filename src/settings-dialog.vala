@@ -6,6 +6,7 @@ public class SettingsDialog : Dialog
 	[GtkChild] public unowned CheckButton startup_checkbutton;
 	[GtkChild] public unowned CheckButton systray_checkbutton;
 	[GtkChild] public unowned CheckButton minimize_pause_checkbutton;
+	[GtkChild] public unowned FileChooserButton screenshot_path_chooser_button;
 
 	private string desktop_autostart_file_path;
 
@@ -20,6 +21,7 @@ public class SettingsDialog : Dialog
 		startup_checkbutton.set_active(config.startup);
 		systray_checkbutton.set_active(config.systray);
 		minimize_pause_checkbutton.set_active(config.minimize_pause);
+		screenshot_path_chooser_button.set_current_folder(config.screenshot_path);
 	}
 
 	[GtkCallback]
@@ -28,6 +30,7 @@ public class SettingsDialog : Dialog
 		config.startup = startup_checkbutton.get_active();
 		config.systray = systray_checkbutton.get_active();
 		config.minimize_pause = minimize_pause_checkbutton.get_active();
+		config.screenshot_path = screenshot_path_chooser_button.get_filename();
 
 		config.save();
 

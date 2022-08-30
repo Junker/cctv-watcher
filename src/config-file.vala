@@ -5,6 +5,7 @@ public class ConfigFile
 	public bool startup = false;
 	public bool systray = true;
 	public bool minimize_pause = true;
+	public string screenshot_path;
 
 	public ConfigFile()
 	{
@@ -25,6 +26,15 @@ public class ConfigFile
 				this.startup = file.get_boolean("settings", "startup");
 			if (file.has_key("settings", "minimize_pause"))
 				this.minimize_pause = file.get_boolean("settings", "minimize_pause");
+
+			if (file.has_key("settings", "screenshot_path"))
+			{
+				this.screenshot_path = file.get_string("settings", "screenshot_path");
+				if (!FileUtils.test(this.screenshot_path, FileTest.IS_DIR))
+					this.screenshot_path = GLib.Environment.get_home_dir();
+			}
+			else
+				this.screenshot_path = GLib.Environment.get_home_dir();
 
 			string[] groups = file.get_groups();
 
@@ -133,7 +143,7 @@ public class ConfigFile
 		file.set_boolean("settings", "startup", config.startup);
 		file.set_boolean("settings", "systray", config.systray);
 		file.set_boolean("settings", "minimize_pause", config.minimize_pause);
-
+		file.set_string("settings", "screenshot_path", config.screenshot_path);
 
 		try
 		{

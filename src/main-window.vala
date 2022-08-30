@@ -56,6 +56,48 @@ public class MainWindow : ApplicationWindow
 	}
 
 	[GtkCallback]
+	public void on_screenshot_button_clicked(ToolButton button)
+	{
+		Widget widget;
+
+		if (camera_grid.visible)
+			widget = (camera_grid as Widget);
+		else
+			widget = (camera_view as Widget);
+
+		int width = widget.get_allocated_width();
+		int height = widget.get_allocated_height();
+
+		Cairo.ImageSurface surface = new Cairo.ImageSurface(Cairo.Format.RGB24, width, height);
+		Cairo.Context ctx = new Cairo.Context(surface);
+
+		widget.draw_to_cairo_context(ctx);
+
+		var now = new DateTime.now_local();
+
+		string file_name = "%s-%s-%s_%s-%s-%s.png".printf(now.get_year().to_string("%02d"),
+														  now.get_month().to_string("%02d"),
+														  now.get_day_of_month().to_string("%02d"),
+														  now.get_hour().to_string("%02d"),
+														  now.get_minute().to_string("%02d"),
+														  now.get_second().to_string("%02d"));
+
+		var status = surface.write_to_png(GLib.Path.build_filename(config.screenshot_path, file_name));
+
+		if (status == Cairo.Status.SUCCESS)
+		{
+			// show notification
+			Notification nt = new Notification("Snapshot");
+			nt.set_body("snapshot saved");
+			app.send_notification(null, nt);
+		}
+		else
+		{
+			show_error_dialog("Screenshot error: %d".printf(status), this);
+		}
+	}
+
+	[GtkCallback]
 	public void on_back_button_clicked()
 	{
 		back_button.hide();
