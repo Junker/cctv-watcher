@@ -36,19 +36,26 @@ public class SettingsDialog : Dialog
 
 		systray.set_visible(config.systray);
 
-		if (config.startup)
+		try
 		{
-			File desktop_file = File.new_build_filename(DATA_DIR, "cctv-watcher.desktop");
-			File autostart_file = File.new_for_path(desktop_autostart_file_path);
+			if (config.startup)
+			{
+				File desktop_file = File.new_build_filename(DATA_DIR, "cctv-watcher.desktop");
+				File autostart_file = File.new_for_path(desktop_autostart_file_path);
 
-			desktop_file.copy(autostart_file, FileCopyFlags.NONE);
+				desktop_file.copy(autostart_file, FileCopyFlags.NONE);
+			}
+			else
+			{
+				File file = File.new_for_path(desktop_autostart_file_path);
+
+				if (file.query_exists())
+					file.@delete();
+			}
 		}
-		else
+		catch (Error e)
 		{
-			File file = File.new_for_path(desktop_autostart_file_path);
-
-			if (file.query_exists())
-				file.@delete();
+			warning(e.message);
 		}
 
 		this.destroy();
