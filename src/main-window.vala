@@ -6,7 +6,7 @@ public class MainWindow : ApplicationWindow
 {
 	[GtkChild] public unowned Grid camera_grid;
 	[GtkChild] public unowned Box camera_view;
-	[GtkChild] public unowned ToolButton back_button;
+	[GtkChild] public unowned Button back_button;
 
 	public MainWindow (Gtk.Application application)
 	{
@@ -30,33 +30,33 @@ public class MainWindow : ApplicationWindow
 	}
 
 	[GtkCallback]
-	public void on_add_button_clicked(ToolButton button)
+	public void on_add_button_clicked(Button button)
 	{
 		EditCameraDialog.add_camera();
 	}
 
 	[GtkCallback]
-	public void on_edit_button_clicked(ToolButton button)
+	public void on_edit_button_clicked(Button button)
 	{
 		var dialog = new CameraListDialog();
 		dialog.run();
 	}
 
 	[GtkCallback]
-	public void on_refresh_button_clicked(ToolButton button)
+	public void on_refresh_button_clicked(Button button)
 	{
 		refresh_cameras();
 	}
 
 	[GtkCallback]
-	public void on_settings_button_clicked(ToolButton button)
+	public void on_settings_button_clicked(Button button)
 	{
 		var dialog = new SettingsDialog();
 		dialog.run();
 	}
 
 	[GtkCallback]
-	public void on_screenshot_button_clicked(ToolButton button)
+	public void on_screenshot_button_clicked(Button button)
 	{
 		Widget widget;
 
