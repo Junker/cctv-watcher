@@ -14,7 +14,7 @@ public class V4lRenderer : Renderer
 
 		if (!source.link(this.decoder))
 		{
-			stderr.printf("source<->decoder Elements could not be linked.\n");
+			warning("source<->decoder Elements could not be linked.");
 			return;
 		}
 

@@ -142,7 +142,7 @@ public class EditCameraDialog : Dialog
 
 		config.save();
 
-		stdout.printf("add camera: %s, type: %s\n", camera_name, camera_type);
+		info("add camera: %s, type: %s\n", camera_name, camera_type);
 
 		main_window.refresh_cameras();
 

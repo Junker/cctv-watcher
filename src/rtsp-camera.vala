@@ -38,8 +38,6 @@ public class RtspCamera : Camera
 
 	public void set_url(string url) throws CameraError
 	{
-		stdout.printf("URL:%s\n", url);
-
 		var surl = url.strip();
 
 		var scheme = Uri.parse_scheme(surl);

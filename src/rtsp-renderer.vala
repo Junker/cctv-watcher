@@ -47,7 +47,7 @@ public class RtspRenderer : Renderer
 
 			if (!depay.link(decoder))
 			{
-				stderr.printf("depay<->decoder Elements could not be linked.\n");
+				warning("depay<->decoder Elements could not be linked.");
 				return;
 			}
 
@@ -78,12 +78,12 @@ public class RtspRenderer : Renderer
 		var next_element = this.camera.codec == CameraCodec.AUTO ? this.decoder : this.depay;
 
 		Gst.Pad sink_pad = next_element.get_static_pad("sink");
-		stdout.printf("Received new pad '%s' from '%s':\n", new_pad.name, src.name);
+		debug("Received new pad '%s' from '%s'", new_pad.name, src.name);
 
 		Gst.Caps new_pad_caps = new_pad.query_caps (null);
 		weak Gst.Structure new_pad_struct = new_pad_caps.get_structure (0);
 		string new_pad_type = new_pad_struct.get_name ();
-		stdout.printf("RTSP:  It has type '%s'\n", new_pad_type);
+		debug("RTSP: It has type '%s'", new_pad_type);
 
 		Gst.PadLinkReturn ret = new_pad.link (sink_pad);
 	}

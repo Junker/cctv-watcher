@@ -109,7 +109,7 @@ public class ConfigFile
 				}
 				catch (CameraError e)
 				{
-					stderr.printf("load config error: %s\n", e.message);
+					warning("load config error: %s\n", e.message);
 					continue;
 				}
 
@@ -117,12 +117,11 @@ public class ConfigFile
 		}
 		catch(KeyFileError err)
 		{
-			stderr.printf("load config error: %s\n", err.message);
-			return false;
+			error("load config error: %s", err.message);
 		}
 		catch(FileError err)
 		{
-			stderr.printf("load config error: %s\n", err.message);
+			warning("load config error: %s", err.message);
 			return false;
 		}
 
