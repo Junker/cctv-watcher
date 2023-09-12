@@ -29,12 +29,12 @@ yay -S cctv-watcher
 
 ### DBUS methods
 
-* show
-* hide
-* toggle
+* Show
+* Hide
+* Toggle
 
 ### DBUS usage example
 
 ```bash
-dbus-send --dest=app.junker.CCTVWatcher --print-reply /app/junker/CCTVWatcher app.junker.CCTVWatcher.show
+dbus-send --dest=app.junker.CCTVWatcher --print-reply /app/junker/CCTVWatcher app.junker.CCTVWatcher.Show
 ```
