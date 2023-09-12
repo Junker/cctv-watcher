@@ -17,14 +17,7 @@ public class SysTray : StatusIcon
 		{
 			if (event.button == 1)
 			{
-				if (main_window.is_active)
-				{
-					app.hide();
-				}
-				else
-				{
-					app.show();
-				}
+				app.toggle();
 			}
 		});
 

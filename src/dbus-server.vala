@@ -10,4 +10,9 @@ public class DbusServer : Object
 	{
 		app.hide();
 	}
+
+	public void toggle() throws GLib.Error
+	{
+		app.toggle();
+	}
 }

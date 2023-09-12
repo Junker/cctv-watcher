@@ -31,6 +31,7 @@ yay -S cctv-watcher
 
 * show
 * hide
+* toggle
 
 ### DBUS usage example
 

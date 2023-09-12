@@ -21,7 +21,7 @@ class App : Gtk.Application
 	{
 		config = new ConfigFile();
 
-		cameras   = new ArrayList<Camera>();
+		cameras	  = new ArrayList<Camera>();
 		renderers = new ArrayList<Renderer>();
 
 		main_window = new MainWindow(this);
@@ -68,6 +68,18 @@ class App : Gtk.Application
 		}
 
 		main_window.hide();
+	}
+
+	public void toggle()
+	{
+		if (main_window.is_active)
+		{
+			app.hide();
+		}
+		else
+		{
+			app.show();
+		}
 	}
 
 	private void on_dbus_aquired(DBusConnection conn) {
