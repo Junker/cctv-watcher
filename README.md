@@ -21,8 +21,19 @@ ninja
 sudo ninja install
 ```
 
-## Install from Arch Linux & Manjaro 
+## Install from Arch Linux & Manjaro
 
 ```bash
-yaourt -S cctv-watcher
+yay -S cctv-watcher
+```
+
+### DBUS methods
+
+* show
+* hide
+
+### DBUS usage example
+
+```bash
+dbus-send --dest=app.junker.CCTVWatcher --print-reply /app/junker/CCTVWatcher app.junker.CCTVWatcher.show
 ```
