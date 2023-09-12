@@ -19,19 +19,11 @@ public class SysTray : StatusIcon
 			{
 				if (main_window.is_active)
 				{
-					if (config.minimize_pause)
-					{
-						main_window.stop_renderers();
-					}
-
-					main_window.hide();
+					app.hide();
 				}
 				else
 				{
-					main_window.play_renderers();
-
-					main_window.show();
-					main_window.present();
+					app.show();
 				}
 			}
 		});

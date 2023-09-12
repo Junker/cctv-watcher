@@ -1,11 +1,12 @@
 project('cctv-watcher', 'vala', 'c',
-	version : '0.1.0',
+	version : '0.3.1',
 	license : 'GPL3')
 
 gnome = import('gnome')
 
 dependencies = [
 	dependency('gtk+-3.0', version : '>=3.22'),
+	dependency('gio-2.0'),
 	dependency('gee-0.8'),
 	dependency('gmodule-2.0'),
 	dependency('gudev-1.0'),
@@ -41,7 +42,7 @@ sources = [
 	'src/test-renderer.vala',
 	'src/v4l-renderer.vala',
 	'src/mjpeg-renderer.vala',
-
+	'src/dbus-server.vala'
 ]
 
 resources = gnome.compile_resources(
@@ -54,6 +55,7 @@ install_data('cctv-watcher.desktop', install_dir: join_paths(datadir, 'applicati
 install_data('cctv-watcher.desktop', install_dir: project_datadir)
 
 vala_flags = '--gresourcesdir=' + join_paths(meson.current_source_dir(), 'ui')
+add_project_arguments(['--vapidir', join_paths(meson.current_source_dir(), 'vapi')], language: 'vala')
 
 executable('cctv-watcher', 'src/app.vala',
 			sources,
