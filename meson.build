@@ -14,6 +14,20 @@ dependencies = [
 	dependency('gstreamer-rtsp-1.0'),
 ]
 
+# StatusNotifierItem (AppIndicator) — работает в трее на Wayland / Plasma 6.
+# Если библиотеки нет, собираемся без неё (старый GtkStatusIcon, только X11).
+appindicator_dep = dependency('ayatana-appindicator3-0.1', required : false)
+if not appindicator_dep.found()
+	appindicator_dep = dependency('appindicator3-0.1', required : false)
+endif
+if appindicator_dep.found()
+	dependencies += appindicator_dep
+	add_project_arguments(['-D', 'HAVE_APPINDICATOR'], language: 'vala')
+	message('AppIndicator found: tray icon will use StatusNotifierItem (Wayland/Plasma 6)')
+else
+	warning('AppIndicator not found: falling back to GtkStatusIcon (X11 only)')
+endif
+
 prefix = get_option('prefix')
 datadir = get_option('datadir')
 project_datadir = join_paths(prefix, datadir, meson.project_name())

@@ -28,13 +28,18 @@ class App : Gtk.Application
 
 		if (config.load())
 		{
-			main_window.maximize();
 			main_window.refresh_cameras();
 
 			if (config.systray)
+			{
+				// Стартуем только в трее: окно не показываем и не разворачиваем.
 				main_window.stop_renderers();
+			}
 			else
+			{
+				main_window.maximize();
 				main_window.show();
+			}
 		}
 
 		systray = new SysTray();
@@ -56,6 +61,9 @@ class App : Gtk.Application
 	{
 		main_window.play_renderers();
 
+		if (!main_window.visible)
+			main_window.maximize();
+
 		main_window.show();
 		main_window.present();
 	}
@@ -72,7 +80,9 @@ class App : Gtk.Application
 
 	public void toggle()
 	{
-		if (main_window.is_active)
+		// Окно считается "показанным", если оно видимо и активно.
+		// Если скрыто (в трее) — показываем.
+		if (main_window.visible && main_window.is_active)
 		{
 			app.hide();
 		}
